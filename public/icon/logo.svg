@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
+  <defs>
+    <style>
+      .cls-1 {
+        font-size: 212.598px;
+        fill: #012980;
+        font-family: "Khmer Chhay Style 4";
+      }
+    </style>
+  </defs>
+  <text id="LDP" class="cls-1" transform="translate(78.962 303.846) rotate(-35.57) scale(1.11)">LDP</text>
+</svg>
