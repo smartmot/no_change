@@ -7,7 +7,7 @@
             <span class="fa fa-camera"></span>
         </label>
     </div>
-    <div id="progz" class="h_3 w_80 bc_5 ts_050" style="width: 0"></div>
+    <div id="progz1" class="h_3 w_80 bc_5 ts_050" style="width: 0"></div>
     <div class="t_a_c pt_4 fs_13 c_6 fm-smreap" id="errorz"></div>
     <div class="pt_0">
         <div class="t_a_c">

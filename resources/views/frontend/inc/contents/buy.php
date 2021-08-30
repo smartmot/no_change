@@ -21,7 +21,6 @@
                                 <div class="w_30">Tel</div>
                                 <div> : {{supplier.tel}}</div>
                             </div>
-                            <div> : {{supplier.dollar}}</div>
                         </div>
                     </div>
                 </div>
@@ -52,14 +51,14 @@
                     clearTimeout(suppliers.timer);
                     suppliers.timer = setTimeout(function (){
                         suppliers.search();
-                    },1000);
+                    },200);
                 }
             }
         },
         methods:{
             timer:setTimeout(function(){
 
-            },1000),
+            },200),
             load:function () {
                 let nis = this;
                 let odr = nis.order;

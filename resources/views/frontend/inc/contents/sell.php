@@ -229,11 +229,7 @@
             e_qty:false,
             exist:false,
             currency:"usd",
-            exchange:{
-                riel_usd:4100,
-                bath_usd:32.97,
-                riel_bath:125.56
-            },
+            exchange:JSON.parse('<?php echo json_encode(config("pos.exchange")); ?>'),
             paid:0,
             customer:[],
             note:"",

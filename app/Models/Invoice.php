@@ -47,10 +47,10 @@ class Invoice extends Model
                 $money = $this->total;
                 break;
             case "riel":
-                $money = $this->total / config("pos.currency")["usd_riel"];
+                $money = $this->total;
                 break;
             case "bath":
-                $money = $this->total / config("pos.currency")["usd_bath"];
+                $money = $this->total;
                 break;
         }
         return $money;

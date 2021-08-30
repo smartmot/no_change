@@ -19,7 +19,7 @@ class CreateStocksTable extends Migration
             $table->integer("qty");
             $table->enum("type",["sold","lost","stock_in","other"]);
             $table->string("note")->nullable();
-            $table->dateTime("date");
+            $table->date("date");
             $table->timestamps();
         });
     }

@@ -63,91 +63,96 @@ class InvoiceController extends Controller
             "currency" => ["required","in:usd,riel,bath"],
         ]);
         $inv = "images/cache/inv_". Auth::id() . ".jpg";
-        $is_error = false;
-        $skip = false;
         if ($validator->fails()){
-            $is_error=true;
-            $skip = true;
-            $data = [];
+            exit(json_encode([
+                "error"=> true,
+                "errors" => $validator->errors()
+            ]));
+        }
+        $data = $validator->validate();
+        if ($data["paid"] === ""){
+            exit(json_encode([
+                "error" => true,
+                "errors" => [0=>"បង់លុយ"]
+            ]));
+        }
+        if (!Storage::disk("local")->exists($inv)){
+            exit(json_encode([
+                "error" => true,
+                "errors" => [
+                    "photo" => [0=>"អត់មានរូបថតវិក័យប័ត្រ"]
+                ]
+            ]));
+        }
+        $items = json_decode($data["items"], true);
+        if (count($items) === 0){
+            exit(json_encode([
+                "error"=>true,
+                "errors" => [
+                    "items" => [0=>"បុងទទេរ"]
+                ]
+            ]));
+        }
+        $newname = date("Y/m/d/His");
+        Storage::disk("local")->move($inv,"images/".$newname.".jpg");
+        $photo = "photo/".$newname.".jpg";
+        $image = Image::make($photo);
+        if ($image->getWidth() < $image->getHeight()){
+            $dem = $image->getWidth();
         }else{
-            $data = $validator->validate();
+            $dem = $image->getHeight();
         }
-        $has_file = Storage::disk("local")->exists($inv);
-        if (!$has_file){
-            $validator->errors()->add("photo","Upload a photo");
-            $is_error = true;
-        }
-        $items = ($skip ? [] : json_decode($data["items"], true));
-        if ($skip == false && count($items) == 0){
-            $validator->errors()->add("items","Require at least one item");
-            $is_error=true;
-        }
-        $ress = [
-            "error" => $is_error,
-            "errors" =>$validator->errors()
+        $image->resizeCanvas($dem,$dem);
+        $image->resize(200,200);
+        $image->save("photo/".$newname."_thumb.jpg");
+        $invd = [
+            "supplier_id" => $data["supplier_id"],
+            "no" => $data["no"],
+            "photo" => $newname,
+            "currency" => $data["currency"],
+            "name" => $data["name"],
+            "date" => $data["date"],
+            "time" => $data["time"],
         ];
-        if ($is_error){
-            return response($ress);
-        }else{
-            $newname = date("Y/m/d/His");
-            Storage::disk("local")->move($inv,"images/".$newname.".jpg");
-            $photo = "photo/".$newname.".jpg";
-            $image = Image::make($photo);
-            if ($image->getWidth() < $image->getHeight()){
-                $dem = $image->getWidth();
-            }else{
-                $dem = $image->getHeight();
-            }
-            $image->resizeCanvas($dem,$dem);
-            $image->resize(200,200);
-            $image->save("photo/".$newname."_thumb.jpg");
-            sleep(3);
-            $invd = [
-                "supplier_id" => $data["supplier_id"],
-                "no" => $data["no"],
-                "photo" => $newname,
-                "currency" => $data["currency"],
-                "name" => $data["name"],
-                "date" => $data["date"],
-                "time" => $data["time"],
-            ];
-            $invoice = new Invoice($invd);
-            $invoice->save();
-            $invoice_id = $invoice->id;
-            $payment = new InvoicePayment([
+        $invoice = new Invoice($invd);
+        $invoice->save();
+        $invoice_id = $invoice->id;
+        $payment = new InvoicePayment([
+            "invoice_id" => $invoice_id,
+            "paid" => $data["paid"],
+            "pay_date" => $data["pay_date"],
+        ]);
+        $payment->save();
+        foreach ($items as $key=>$item){
+            $code = $data["no"] . "-0".($key+1);
+            $barcode = date("Y/m/d/").$code.".svg";
+            Storage::disk("local")->put("images/b/".$barcode,DNS1D::getBarcodeSVG($code, 'C128',1,50,"black", true));
+            $iphoto = "photo/".$item["photo"];
+            $img = Image::make($iphoto);
+            $iname = str_replace("photo/", "", $img->dirname) ."/". $img->filename;
+            $img->resize(200,200);
+            $img->save(($img->dirname) ."/". $img->filename."_thumb.jpg");
+            $itm = new InvoiceItem([
                 "invoice_id" => $invoice_id,
-                "paid" => $data["paid"],
-                "pay_date" => $data["pay_date"],
+                "photo" => $iname,
+                "name" => $item["name"],
+                "ids" => $code,
+                "unit_price" => $item["unit_price"],
+                "barcode_image" => $barcode,
             ]);
-            $payment->save();
-            foreach ($items as $key=>$item){
-                $code = $data["no"] . "-0".($key+1);
-                $barcode = date("Y/m/d/").$code.".svg";
-                Storage::disk("local")->put("images/b/".$barcode,DNS1D::getBarcodeSVG($code, 'C128',1,50,"black", true));
-                $iphoto = "photo/".$item["photo"];
-                $img = Image::make($iphoto);
-                $iname = str_replace("photo/", "", $img->dirname) ."/". $img->filename;
-                $img->resize(200,200);
-                $img->save(($img->dirname) ."/". $img->filename."_thumb.jpg");
-                $itm = new InvoiceItem([
-                    "invoice_id" => $invoice_id,
-                    "photo" => $iname,
-                    "name" => $item["name"],
-                    "ids" => $code,
-                    "unit_price" => $item["unit_price"],
-                    "barcode_image" => $barcode,
-                ]);
-                $itm->save();
-                $stock = new Stock([
-                    "item_id" => $itm->id,
-                    "qty" => $item["qty"],
-                    "date" => date("Y/m/d H:i:s"),
-                    "note"=> "ចូលស្តុក"
-                ]);
-                $stock->save();
-            }
-            return response($ress);
+            $itm->save();
+            $stock = new Stock([
+                "item_id" => $itm->id,
+                "qty" => $item["qty"],
+                "type" => "stock_in",
+                "date" => date("Y/m/d H:i:s"),
+                "note"=> "ចូលស្តុក"
+            ]);
+            $stock->save();
         }
+        return response([
+            "error" => false,
+        ]);
 
     }
 
