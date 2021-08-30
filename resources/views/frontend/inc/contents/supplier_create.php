@@ -6,7 +6,7 @@
                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                     <div class="ds_f">
                         <div class="w_200 p-r">
-                            <img id="newimg" class="wp_100 box-s4" src="<?php echo asset("images/profile.png"); ?>" alt="">
+                            <img id="newimg" class="wp_100 box-s4" src="<?php echo asset("profile.svg"); ?>" alt="">
                             <div class="p-a b_13" style="right: 85px;">
                                 <label for="thumb" class="w_30 ds_b h_30 bc_1 c_2 lh_30 t_a_c b_r_c box-s1 csr-p hbc-warning">
                                     <span class="fa fa-camera"></span>
@@ -84,7 +84,7 @@
     </div>
 </div>
 
-<div class="cropx axaz1 box-s1 b_r_5 ds_n">
+<div class="cropx axaz1 box-s1 b_r_5 ds_n bc_1">
     <div class="h_30 lh_30">
         <div class="pr_20 pl_20 fm-ubt">Crop Image</div>
     </div>
@@ -94,7 +94,7 @@
     </div>
     <div class="hp_100 wp_100 p-r">
         <div id="">
-            <img id="tocrop" class="wp_100" src="<?php echo asset("icon/16x9_pulse.svg"); ?>" alt="">
+            <img id="tocrop" class="imgcz" src="" alt="">
         </div>
         <div class="h_50 wp_100">
             <div class="pr_20 pl_20 lh_50">
@@ -139,7 +139,7 @@
            }else{
                $("#msg").fadeIn('fast');
                $("#reset").click();
-               $("#newimg").attr("src","<?php echo asset("images/profile.png"); ?>");
+               $("#newimg").attr("src","<?php echo asset("profile.svg"); ?>");
                setTimeout(function (){
                    $("#msg").fadeOut('fast');
                },8000);
@@ -193,7 +193,7 @@
                 if (!data.error){
                     url = "<?php echo asset("photo"); ?>/" + data.url;
                     $(".cropx").fadeIn();
-                    image.src = "<?php echo asset("icon/30x35_pulse.svg"); ?>";
+                    image.src = "<?php echo asset("icon/16x9_pulse.svg"); ?>";
                     img.load("<?php echo asset("photo")."/"; ?>"+data.url, function (){
                         image.src = url;
                         setTimeout(function (){
