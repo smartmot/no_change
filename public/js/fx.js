@@ -55,8 +55,44 @@ const f = {
         }
         req.open(options.m,options.target, true);
         req.send(options.x);
+    },
+    i(dataobj){
+        let dataform = new FormData();
+        let datakeys = Object.keys(dataobj);
+        for (let datai = 0; datai < datakeys.length; datai++){
+            dataform.append(datakeys[datai], dataobj[datakeys[datai]]);
+        }
+        return dataform;
     }
 };
+
+const srtz = function (objz,sortby,direct='desc'){
+    switch (direct){
+        case "desc":
+            return objz.sort(function (sone,stwo) {
+                if (sone[sortby] < stwo[sortby]){
+                    return 1;
+                }else if (sone[sortby] > stwo[sortby]){
+                    return -1;
+                }else{
+                    return 0;
+                }
+            });
+            break;
+        case "asc":
+            return objz.sort(function (sone,stwo) {
+                if (sone[sortby] > stwo[sortby]){
+                    return 1;
+                }else if (sone[sortby] < stwo[sortby]){
+                    return -1;
+                }else{
+                    return 0;
+                }
+            });
+            break;
+    }
+};
+
 const img = {
     load(src, fn){
         let image = new Image();
@@ -99,3 +135,31 @@ const _e = {
         return document.getElementsByName(name)[index];
     }
 }
+let $_i = [];
+let $_c = {
+    config:""
+};
+Object.defineProperty(Object.prototype,"watch",{
+    writable:true,
+    enumerable:false,
+    configurable:true,
+    value:function (prop, handler){
+        var oldval = this[prop],
+            newval = oldval,
+            getter = function () {
+                return newval;
+            },
+            setter = function (val) {
+                oldval = newval;
+                return newval = handler.call(this, prop, oldval, val);
+            };
+        if (delete this[prop]) { // can't watch constants
+            Object.defineProperty(this, prop, {
+                get: getter
+                , set: setter
+                , enumerable: true
+                , configurable: true
+            });
+        }
+    }
+});

@@ -16,7 +16,7 @@
                                 <div class="cs11">
                                     <div class="p-r">
                                         <div>
-                                            <img id="newimg" class="wp_100 box-s4" src="<?php echo asset("images/profile.png"); ?>" alt="">
+                                            <img id="newimg" class="wp_100 box-s4" src="<?php echo asset("profile.svg"); ?>" alt="">
                                         </div>
                                         <label for="thumb" class="p-a ds_b w_30 h_30 bc_1 c_2 b_r_c lh_30 t_a_c csr-p box-s1 b_10" style="right: calc(50% - 15px)">
                                             <span class="fa fa-camera"></span>
@@ -29,14 +29,14 @@
                                 <div>
                                     <label for="name">ឈ្មោះ<span v-if="errors.name" class="c_6"> : {{ errors.name[0] }}</span></label>
                                     <div class="ds_f">
-                                        <input id="name" name="name" class="input-1 box-s4 bd_n b_r_4 pt_3 pb_3 fm-smreap wp_100 fs_16 pr_10 pl_10">
+                                        <input id="name" v-model="params.name" name="name" class="input-1 box-s4 bd_n b_r_4 pt_3 pb_3 fm-smreap wp_100 fs_16 pr_10 pl_10">
                                     </div>
                                 </div>
                                 <div class="pt_5">
-                                    <label for="gender">ភេទ<span v-if="errors.name" class="c_6"> : Invalid</span></label>
+                                    <label for="gender">ភេទ<span v-if="errors.gender" class="c_6"> : Invalid</span></label>
                                     <div class="ds_f">
-                                        <select id="gender" name="gender" class="input-1 box-s4 bd_n b_r_4 pt_3 pb_3 fm-smreap wp_100 fs_16 pr_10 pl_10">
-                                            <option>ភេទ</option>
+                                        <select v-model="params.gender" id="gender" name="gender" class="input-1 box-s4 bd_n b_r_4 pt_3 pb_3 fm-smreap wp_100 fs_16 pr_10 pl_10">
+                                            <option value="">ភេទ</option>
                                             <option value="male">ប្រុស</option>
                                             <option value="female">ស្រី</option>
                                         </select>
@@ -46,7 +46,7 @@
                                 <div class="pt_5">
                                     <label for="tel">លេខទូរស័ព្ទ<span v-if="errors.tel" class="c_6"> : {{ errors.tel[0] }}</span></label>
                                     <div class="ds_f">
-                                        <input id="tel" name="tel" class="input-1 box-s4 bd_n b_r_4 pt_3 pb_3 fm-smreap wp_100 fs_16 pr_10 pl_10">
+                                        <input id="tel" v-model="params.tel" name="tel" class="input-1 box-s4 bd_n b_r_4 pt_3 pb_3 fm-smreap wp_100 fs_16 pr_10 pl_10">
                                     </div>
                                 </div>
                             </div>
@@ -55,14 +55,14 @@
                         <div class="pt_5 fm-smreap">
                             <label for="address">អាសយដ្ឋាន<span v-if="errors.address" class="c_6"> : {{ errors.address[0] }}</span></label>
                             <div class="ds_f">
-                                <input id="address" name="address" class="input-1 box-s4 bd_n b_r_4 pt_3 pb_3 fm-smreap wp_100 fs_16 pr_10 pl_10">
+                                <input id="address" v-model="params.address" name="address" class="input-1 box-s4 bd_n b_r_4 pt_3 pb_3 fm-smreap wp_100 fs_16 pr_10 pl_10">
                             </div>
                         </div>
 
                         <div class="pt_5 fm-smreap">
                             <label for="note">សំគាល់<span v-if="errors.note" class="c_6"> : {{ errors.note[0] }}</span></label>
                             <div class="ds_f">
-                                <input id="note" name="note" class="input-1 box-s4 bd_n b_r_4 pt_3 pb_3 fm-smreap wp_100 fs_16 pr_10 pl_10">
+                                <input id="note" v-model="params.note" name="note" class="input-1 box-s4 bd_n b_r_4 pt_3 pb_3 fm-smreap wp_100 fs_16 pr_10 pl_10">
                             </div>
                         </div>
 
@@ -80,7 +80,8 @@
         </div>
     </div>
 </div>
-<div class="cropx box-s1 b_r_5 ds_n">
+
+<div class="cropx axaz1 box-s1 b_r_5 ds_n bc_1">
     <div class="h_30 lh_30">
         <div class="pr_20 pl_20 fm-ubt">Crop Image</div>
     </div>
@@ -89,13 +90,13 @@
         <div class="h_10"></div>
     </div>
     <div class="hp_100 wp_100 p-r">
-        <div>
-            <img id="cropimage" class="wp_100" src="<?php echo asset("icon/16x9_pulse.svg"); ?>" alt="">
+        <div id="">
+            <img id="cropimage" class="imgcz" src="" alt="">
         </div>
         <div class="h_50 wp_100">
             <div class="pr_20 pl_20 lh_50">
                 <div class="t_a_c">
-                    <button class="pr_10 pl_10 oln_n bd_n pt_3 pb_3 b_r_3 bcolor_5 color_1 csr-p hcolor_4 fs_16" onclick="$('.cropx').fadeOut('fast')">
+                    <button class="pr_10 pl_10 oln_n bd_n pt_3 pb_3 b_r_3 bcolor_5 color_1 csr-p hcolor_4 fs_16" onclick="$('.axaz1').fadeOut('fast')">
                         <span>Cancel</span>
                     </button>
                     <button class="pr_10 pl_10 oln_n bd_n pt_3 pb_3 b_r_3 bcolor_5 color_1 csr-p hcolor_4 fs_16">
@@ -122,12 +123,71 @@
         el:"#customer",
         data:{
             errors:[],
+            params:{
+                name:"",
+                gender:"",
+                tel:"",
+                address:"",
+                note:"",
+            }
+        },
+        methods:{
+            create:function (){
+                let crte = this;
+                crte.errors = [];
+                axios.post("<?php echo route("customer.store"); ?>", null, {
+                    headers:$_i.headers,
+                    params:this.params,
+                }).then(function (created){
+                    if (created.data.error){
+                        crte.errors = created.data.errors;
+                    }else{
+                        window.location.href = "<?php echo route("sell.customer"); ?>";
+                    }
+                }).catch(function (c_error){
+                    alert(c_error);
+                })
+            }
         }
     });
     let menu = document.getElementsByClassName("hmenu")[0];
     menu.getElementsByTagName("a")[1].classList.add("active");
     let imagez = document.getElementById("cropimage");
     let img_url = "<?php echo asset("icon/16x9_pulse.svg"); ?>", croperz, cordsz = {};
+
+    $("#cropbtn").click(function (){
+        f.r({
+            d:function (resp){
+                if (!resp.error){
+                    $("#newimg").attr("src", "<?php echo asset("icon/30x35_pulse.svg"); ?>");
+                    $(".cropx").fadeOut();
+                    croperz.destroy();
+                    img.load("<?php echo asset("photo")."/"; ?>"+resp.url, function (){
+                        $("#newimg")
+                            .attr("src", '<?php echo asset("photo").'/'; ?>'+resp.url);
+                        $("#prog")
+                            .removeClass("ts_050")
+                            .css("width", "0");
+                        setTimeout(function (){
+                            $("#prog").addClass("ts_050");
+                        },1000);
+                    });
+                }else {
+                    croperz.destroy();
+                }
+            },
+            p:function (pro,status){
+                $("#prog").css("width", status+"%");
+            },
+        },{x:f.f($("#cordform1")),m:"post",t:"json",target:"<?php echo route("upload.crop"); ?>"});
+    })
+        .prev().click(function (){
+        croperz.rotateTo(cdata.r + 90);
+    })
+        .prev().click(function (){
+        croperz.rotateTo(cdata.r - 90);
+    });
+
     $("#fileupload").submit(function (e){
         e.preventDefault();
         f.r({
@@ -142,7 +202,7 @@
                         imagez.src = img_url;
                         setTimeout(function (){
                             croperz = $f.x(imagez,function (cord){
-                                //$("#cord").attr("value", JSON.stringify(cord));
+                                $("#cord").attr("value", JSON.stringify(cord));
                             },{
                                 ratio:(6/7)
                             });

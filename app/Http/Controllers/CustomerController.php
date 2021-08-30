@@ -58,7 +58,7 @@ class CustomerController extends Controller
                 $photo->save($photo->dirname."/".$photo->filename."_thumb.".$photo->extension);
                 $cus["photo"]= $name;
             }else{
-                $cus["photo"] = "profile";
+                $cus["photo"] = null;
             }
             $resp = [
                 "error" => false,

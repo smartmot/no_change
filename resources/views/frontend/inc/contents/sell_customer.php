@@ -35,16 +35,7 @@
         },
         mounted:function (){
             let niiss=this;
-            setTimeout(function (){
-                axios.get("<?php echo route("customer.index"); ?>", {
-                    headers:$_i.headers,
-                    params:niiss.params
-                }).then(response=>{
-                    niiss.customers = response.data;
-                }).catch(function (err){
-                    alert(err);
-                })
-            },500);
+            $_
         }
     });
 </script>
