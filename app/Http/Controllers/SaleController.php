@@ -11,14 +11,47 @@ use Illuminate\Support\Facades\Validator;
 
 class SaleController extends Controller
 {
-    /**
+    /*
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            "customer_id" => ["required", "exists:customers,id"],
+            "filter" => ["required", "in:all,due"]
+        ]);
+
+        if ($validator->fails()){
+            return response([
+                "error" => true,
+                "errors" => $validator->errors()
+            ]);
+        }else{
+            $dac = 1;
+            $data = $validator->validate();
+            $sale = Sale::query()
+                ->where("customer_id", "=", $data["customer_id"])
+                ->with("items")
+                ->limit(50);
+            switch ($data["filter"]){
+                case "due":
+                    $sale = $sale
+                        ->get()
+                        ->where("due", ">", 0)
+                        ->toArray();
+                    break;
+                default:
+                    $sale = $sale
+                        ->get()
+                        ->toArray();
+            }
+            return response([
+                "error" => false,
+                "data" => $sale
+            ]);
+        }
     }
 
     /*
@@ -52,9 +85,21 @@ class SaleController extends Controller
                 exit(json_encode(["error" => true, "errors" => ["items"=>[0=>"គ្មានទំនិញ"]]]));
             }
 
+            if ($data["paid"] > $data["total"]){
+                exit(json_encode([
+                    "error" => true,
+                    "errors" => [
+                        "paid" => [0=>"បង់លុយលើស"]
+                    ]
+                ]));
+            }
+            $year = date("Y");
+            $no = Sale::query()->whereDay("date", $year)->count() + 1;
+
             $sale = [
                 "customer_id" => ($data["customer_id"] ?? null),
                 "date" => date("Y-m-d"),
+                "no" => $year."-".$no,
                 "currency" => $data["currency"],
                 "note" => $data["note"] ?? null,
                 "total" => $data["total"],
@@ -91,9 +136,9 @@ class SaleController extends Controller
             $paid->save();
 
             $resp = [
-                "error" => $error,
+                "error" => false,
             ];
-            return response($data);
+            return response($resp);
         }
     }
 

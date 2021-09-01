@@ -321,6 +321,7 @@ input.oln_g:focus{outline: 1px solid gray;}
 .w_65{width: 65px;}
 .w_60{width: 60px;}
 .w_50{width: 50px;}
+.w_55{width: 55px;}
 .w_5{width: 5px;}
 .w_10{width: 10px;}
 .w_20{width: 20px;}
@@ -386,6 +387,8 @@ input.oln_g:focus{outline: 1px solid gray;}
 .h_200{height: 200px;}
 .h_225{height: 225px;}
 .h_250{height: 250px;}
+.h_260{height: 260px;}
+.h_270{height: 270px;}
 .h_300{height: 300px;}
 
 .mnh_50{min-height: 50px;}
@@ -2178,7 +2181,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     padding-bottom: 20px;
 }
 .invmini thead{
-
+    border-bottom: 1px solid #dedede;
 }
 .invmini td:nth-child(4),
 .invmini td:nth-child(5)

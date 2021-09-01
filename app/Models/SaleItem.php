@@ -14,4 +14,16 @@ class SaleItem extends Model
         "stock_id",
         "price",
     ];
+
+    public function stock(){
+        return $this->belongsTo(Stock::class, "stock_id");
+    }
+
+    protected $appends =[
+        "amount",
+    ];
+
+    public function getAmountAttribute(){
+        return -$this->stock()->first()->qty * $this->price;
+    }
 }

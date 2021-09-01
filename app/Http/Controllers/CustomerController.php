@@ -16,13 +16,18 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $customers = Customer::query()
-            ->limit(50)
-            ->get()
-            ->toArray();
-        return response($customers);
+            ->limit(50);
+        if ($request->has("keyword")){
+            if (is_numeric($request->get("keyword"))){
+                $customers->where("id","=",$request->get("keyword"));
+            }else{
+                $customers->where("name","like","%".$request->get("keyword")."%");
+            }
+        }
+        return response($customers->get()->toArray());
     }
 
     /*
@@ -66,6 +71,7 @@ class CustomerController extends Controller
             ];
             $customer = new Customer($resp["customer"]);
             $customer->save();
+            $cus["id"] = $customer->id;
         }
         return response($resp);
     }
@@ -81,7 +87,7 @@ class CustomerController extends Controller
         //
     }
 
-    /**
+    /*
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -90,7 +96,27 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            "name" => ["required", "max:255"],
+            "gender" => ["required", "in:male,female"],
+            "tel" => ["nullable", "max:255"],
+            "address" => ["nullable", "max:255"],
+            "note" => ["nullable", "max:255"],
+        ]);
+        if ($validator->fails()){
+            return response([
+                "error" => true,
+                "errors" => $validator->errors()
+            ]);
+        }else{
+            $data = $validator->validate();
+            $customer->update($data);
+            $customer->save();
+            return response([
+                "error" => false,
+                "data"=> $data
+            ]);
+        }
     }
 
     /**
@@ -102,5 +128,28 @@ class CustomerController extends Controller
     public function destroy(Customer $customer)
     {
         //
+    }
+
+    public function update_photo(Customer $customer){
+        $imagez = "images/cache/upload_". Auth::id() . ".jpg";
+
+        $cover = date("Y/m/d/His");
+        $foler = "images/";
+        if (Storage::disk("local")->exists($imagez)) {
+            Storage::move($imagez, $foler.$cover. ".jpg");
+            $photo = Image::make("photo/".$cover. ".jpg");
+            $photo->resize(343, 400);
+            $photo->save($photo->dirname."/".$photo->filename."_thumb.".$photo->extension);
+            $thumb = $cover;
+            $customer->photo = $thumb;
+            $customer->save();
+            return response([
+                "error" => false,
+            ]);
+        }else{
+            return response([
+                "error" => true,
+            ]);
+        }
     }
 }

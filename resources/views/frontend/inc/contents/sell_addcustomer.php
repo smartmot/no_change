@@ -66,7 +66,18 @@
                             </div>
                         </div>
 
-                        <div class="pt_20">
+                        <div class="pt_10">
+                            <div>
+                                <label class="fm-smreap us_n">
+                                    <input v-model="multiple" class="fs_20" type="checkbox">&nbsp;<span>បញ្ចូលច្រើនទៀត</span>
+                                </label>
+                            </div>
+                            <div class="fm-smreap fs_14 c-success" v-if="flash">
+                                <span class="fa fa-check"></span> &nbsp;បានបញ្ចូលក្នុងបញ្ជី
+                            </div>
+                        </div>
+
+                        <div class="pt_10">
                             <div class="ds_f">
                                 <div class="flx"></div>
                                 <div>
@@ -74,6 +85,8 @@
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
                 </form>
             </div>
@@ -129,7 +142,9 @@
                 tel:"",
                 address:"",
                 note:"",
-            }
+            },
+            multiple:false,
+            flash:false,
         },
         methods:{
             create:function (){
@@ -142,7 +157,16 @@
                     if (created.data.error){
                         crte.errors = created.data.errors;
                     }else{
-                        window.location.href = "<?php echo route("sell.customer"); ?>";
+                        crte.flash = true;
+                        setTimeout(function (){
+                            crte.flash = false;
+                        },3000);
+                        if (crte.multiple){
+                            crte.params = {name:"", gender:"", tel:"", address:"", note:"",};
+                            $("#newimg").attr("src", "<?php echo asset("profile.svg"); ?>");
+                        }else{
+                            window.location.href = "<?php echo route("sell.customer"); ?>";
+                        }
                     }
                 }).catch(function (c_error){
                     alert(c_error);

@@ -23,6 +23,7 @@ Route::middleware("auth.basic")->group(function (){
     Route::apiResource("supplier",Controllers\SupplierController::class);
     Route::put("supplier/profile/{supplier}",[Controllers\SupplierController::class,"update_profile"])->name("supplier.save");
     Route::apiResource("customer",Controllers\CustomerController::class);
+    Route::put("customer/photo/{customer}",[Controllers\CustomerController::class, "update_photo"])->name("customer.save");
     Route::apiResource("invoice",Controllers\InvoiceController::class);
     Route::apiResource("payment",Controllers\InvoicePaymentController::class);
     Route::apiResource("invoice_item",Controllers\InvoiceItemController::class);

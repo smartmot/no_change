@@ -28,6 +28,7 @@ Route::middleware(["auth"])->group(function (){
 
     Route::get("/sell",[Controllers\FrontendController::class,"sell"])->name("sell");
     Route::get("/sell/customer",[Controllers\FrontendController::class,"sell_customer"])->name("sell.customer");
+    Route::get("/sell/customer/c/{customer}",[Controllers\FrontendController::class,"customer_show"])->name("customer.show");
     Route::get("/sell/customer/add",[Controllers\FrontendController::class,"add_customer"])->name("sell.addcustomer");
     Route::get("/stock",[Controllers\FrontendController::class,"stock"])->name("stock");
     Route::get("/stock/count",[Controllers\FrontendController::class,"stockcount"])->name("stock.count");

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\InvoicePayment;
+use App\Models\Sale;
 use App\Models\Setting;
 use App\Models\Supplier;
 use App\Models\User;
@@ -27,9 +29,13 @@ class FrontendController extends Controller
     }
 
     public function test(){
-        $img = "photo/cache/upload_1.jpg";
-        $image = Image::make($img);
-        return $image->response();
+        $sale = Sale::query()
+            ->with("items")
+            ->limit(3)
+            ->get()
+            ->where("customer_id", "=", 1)
+            ->toArray();
+        dd($sale);
     }
 
     public function buy(){
@@ -50,6 +56,11 @@ class FrontendController extends Controller
 
     public function sell_customer(){
         return view("frontend.sell_customer");
+    }
+    public function customer_show(Customer $customer){
+        return view("frontend.customer_show")->with([
+            "customer" => $customer
+        ]);
     }
     public function add_customer(){
         return view("frontend.sell_addcustomer");

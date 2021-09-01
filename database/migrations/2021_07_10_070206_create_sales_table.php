@@ -17,6 +17,7 @@ class CreateSalesTable extends Migration
             $table->id();
             $table->foreignId("customer_id")->nullable();
             $table->string("date");
+            $table->string("no");
             $table->enum("currency",["usd","riel","bath"]);
             $table->string("note")->nullable();
             $table->decimal("total");
