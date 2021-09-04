@@ -21,20 +21,18 @@
                 <th>ឥវ៉ាន់</th>
                 <th>តម្លៃ</th>
                 <th>ទូទាត់</th>
-                <th>កាលបរិច្ឆេទ</th>
                 <th>ខ្វះ</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="(invoice, no) in invoices">
                 <td>{{no+1}}</td>
-                <td>{{invoice.id}}</td>
-                <td>{{invoice.date}}</td>
-                <td>{{invoice.items.length}}</td>
-                <td>{{money(invoice.total,invoice.currency)}}</td>
-                <td>{{money(invoice.paid, invoice.currency)}}</td>
-                <td>{{invoice.pay_date}}</td>
-                <td>{{money(invoice.total - invoice.paid, invoice.currency)}}</td>
+                <td>{{ invoice.no }}</td>
+                <td>{{ invoice.date }}</td>
+                <td>{{ -invoice.qty }}</td>
+                <td>{{ money(invoice.total, invoice.currency) }}</td>
+                <td>{{ money(invoice.paid, invoice.currency) }}</td>
+                <td>{{ money(invoice.due, invoice.currency) }}</td>
             </tr>
             </tbody>
         </table>

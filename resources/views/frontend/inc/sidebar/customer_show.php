@@ -53,8 +53,8 @@
     </div>
     <div class="h_1 bc_1 mt_5 mb_5"></div>
     <div class="pt_5 pb_5">
-        <a href="" class="ds_b fm-smreap t_d_n c_8 <?php echo request()->route()->getName() == "customer.show" ? "active" : ""; ?>">វិក័យប័ត្រ</a>
-        <a href="" class="ds_b fm-smreap t_d_n c_8 <?php echo request()->route()->getName() == "invoices.create" ? "active" : ""; ?>">ស្តុក</a>
+        <a href="<?php echo route("customer.show", $customer["id"]); ?>" class="ds_b fm-smreap t_d_n c_8 <?php echo request()->route()->getName() == "customer.show" ? "active" : ""; ?>">វិក័យប័ត្រ</a>
+        <a href="<?php echo route("customer.stock", $customer["id"]); ?>" class="ds_b fm-smreap t_d_n c_8 <?php echo request()->route()->getName() == "customer.stock" ? "active" : ""; ?>">ស្តុក</a>
     </div>
 
 </div>

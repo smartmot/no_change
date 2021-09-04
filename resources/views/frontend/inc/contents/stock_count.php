@@ -19,8 +19,8 @@
                 <td>{{ ii+1 }}</td>
                 <td>{{ stock.name }}</td>
                 <td>{{ stock.date }}</td>
-                <td>{{ stock.qty }}</td>
-                <td>{{ stock.unit_price + currency[stock.currency] }}</td>
+                <td>{{ numeral(stock.qty).format("0,0") }}</td>
+                <td>{{ money(stock.unit_price,stock.currency) }}</td>
                 <td>{{ stock.ids }}</td>
                 <td>
                     <img class="w_50" v-bind:src="'<?php echo asset("photo"); ?>/'+stock.photo+'_thumb.jpg'" alt="">
@@ -32,34 +32,3 @@
         </table>
     </div>
 </div>
-<script type="text/javascript">
-    let stock = new Vue({
-        el:"#stockcontrol",
-        data:{
-            stocks:[],
-            currency:{
-                riel:"៛",
-                usd:"$",
-                bath:"បាត"
-            },
-            params:{
-                sort:"date"
-            }
-        },
-        mounted:function (){
-            let niss = this;
-            setTimeout(function (){
-                axios.get("<?php echo route("stock.index"); ?>",{
-                    headers:$_i.headers,
-                    params:niss.params
-                })
-                    .then(response=>{
-                        niss.stocks = response.data
-                    })
-            }, 500);
-        },
-        methods:{
-
-        }
-    });
-</script>

@@ -7,6 +7,7 @@ use App\Models\SaleItem;
 use App\Models\SalePayment;
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class SaleController extends Controller
@@ -31,15 +32,19 @@ class SaleController extends Controller
         }else{
             $dac = 1;
             $data = $validator->validate();
-            $sale = Sale::query()
+            $qty = "select SUM(qty) as qty from sale_items inner join stocks on stocks.id = sale_items.stock_id where sale_id = sales.id group by sale_id";
+            $paid = "select SUM(paid) from sale_payments where sale_id = sales.id";
+            $sale = DB::table("sales")
+                ->selectRaw("*,($paid) as paid, total - ($paid) as due, ($qty) as qty")
                 ->where("customer_id", "=", $data["customer_id"])
-                ->with("items")
-                ->limit(50);
+                ->orderBy("created_at", "desc")
+                ;
+
             switch ($data["filter"]){
                 case "due":
                     $sale = $sale
+                        ->having("due", ">", 0)
                         ->get()
-                        ->where("due", ">", 0)
                         ->toArray();
                     break;
                 default:
@@ -94,12 +99,12 @@ class SaleController extends Controller
                 ]));
             }
             $year = date("Y");
-            $no = Sale::query()->whereDay("date", $year)->count() + 1;
+            $no = Sale::query()->whereYear("date", $year)->count() + 1;
 
             $sale = [
                 "customer_id" => ($data["customer_id"] ?? null),
                 "date" => date("Y-m-d"),
-                "no" => $year."-".$no,
+                "no" => $year."-".str_pad($no, 3, '0', STR_PAD_LEFT),
                 "currency" => $data["currency"],
                 "note" => $data["note"] ?? null,
                 "total" => $data["total"],

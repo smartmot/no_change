@@ -18,10 +18,8 @@ require "inc/header.php"
 require "inc/stock.php";
 ?>
 <?php
-require "inc/footer.php"
+require "inc/footer.php";
+require "inc/component/stock.php";
 ?>
-<script type="text/javascript">
-    $_accept();
-</script>
 </body>
 </html>

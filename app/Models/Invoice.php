@@ -47,18 +47,16 @@ class Invoice extends Model
                 $money = $this->total;
                 break;
             case "riel":
-                $money = $this->total;
+                $money = $this->total/config("pos.exchange")["riel_usd"];
                 break;
             case "bath":
-                $money = $this->total;
+                $money = $this->total/config("pos.exchange")["bath_usd"];
                 break;
         }
         return $money;
     }
     public function getTotalAttribute(){
-        $total = $this->items()->get()->sum(function ($payment){
-            return $payment["amount"];
-        });
+        $total = $this->items()->get()->sum("amount");
         return $total;
     }
 

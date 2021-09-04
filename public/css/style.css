@@ -653,7 +653,12 @@ input.oln_g:focus{outline: 1px solid gray;}
 .fx_10{-ms-flex:0 0 83.333333%;flex:0 0 83.333333%;max-width:83.333333%}
 .fx_11{-ms-flex:0 0 91.666667%;flex:0 0 91.666667%;max-width:91.666667%}
 .fx_12{-ms-flex:0 0 100%;flex:0 0 100%;max-width:100%}
+.cs13{width: 510px; display: flex}
 @media (max-width:576px){
+    .cs13{display: block; width: 170px;}
+    .cs13 .ds_f{
+        display: flex;
+    }
     .soc_links{display: block;}
     .soc_links li{display: inline-block;display: -moz-inline-block}
 }

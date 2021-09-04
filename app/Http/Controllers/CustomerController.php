@@ -65,13 +65,13 @@ class CustomerController extends Controller
             }else{
                 $cus["photo"] = null;
             }
+            $customer = new Customer($cus);
+            $customer->save();
+            $cus["id"] = $customer->id;
             $resp = [
                 "error" => false,
                 "customer" => $cus
             ];
-            $customer = new Customer($resp["customer"]);
-            $customer->save();
-            $cus["id"] = $customer->id;
         }
         return response($resp);
     }

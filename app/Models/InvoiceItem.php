@@ -34,6 +34,7 @@ class InvoiceItem extends Model
         "lost",
         "sold",
         "date",
+        "currency",
     ];
 
     public function getDateAttribute(){
@@ -43,7 +44,7 @@ class InvoiceItem extends Model
         return $this->stocks()->where("type", "lost")->sum("qty");
     }
     public function getSoldAttribute(){
-        return $this->stocks()->where("type", "sold")->sum("qty");
+        return -$this->stocks()->where("type", "sold")->sum("qty");
     }
     public function getQtyAttribute(){
         return $this->stocks()->sum("qty");
@@ -58,6 +59,9 @@ class InvoiceItem extends Model
         return $amount;
     }
 
+    public function getCurrencyAttribute(){
+        return $this->invoice()->first()->currency;
+    }
     public function getSupplierIdAttribute(){
         return $this->invoice()->first()->supplier_id;
     }

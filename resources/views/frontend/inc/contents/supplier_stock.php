@@ -48,7 +48,7 @@
                     <td>{{ ii+1 }}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.qty }}</td>
-                    <td>{{ item.unit_price }}</td>
+                    <td>{{ money(item.unit_price, item.currency) }}</td>
                     <td>{{ item.ids }}</td>
                     <td>
                         <img class="w_60" v-bind:src="'<?php echo asset("photo"); ?>/'+item.photo+'_thumb.jpg'" alt="">
@@ -90,7 +90,23 @@
             sort:function (){
                 let sortto = this.sortz.split(",");
                 srtz(this.items,sortto[0],sortto[1]);
-            }
+            },
+            money:function (money,currency){
+                switch (currency){
+                    case "riel":
+                        return numeral(money).format('0,0') + "៛";
+                        break;
+                    case "usd":
+                        return numeral(parseFloat(money)).format('0,0.00$');
+                        break;
+                    case "bath":
+                        return numeral(money).format('0,0') + "បាត";
+                        break;
+                    default:
+                        return numeral(parseFloat(money)).format('$0,0.00');
+                        break;
+                }
+            },
         }
     });
 </script>

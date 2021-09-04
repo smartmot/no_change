@@ -68,7 +68,7 @@ const f = {
 
 const srtz = function (objz,sortby,direct='desc'){
     switch (direct){
-        case "desc":
+        case "asc":
             return objz.sort(function (sone,stwo) {
                 if (sone[sortby] < stwo[sortby]){
                     return 1;
@@ -79,7 +79,7 @@ const srtz = function (objz,sortby,direct='desc'){
                 }
             });
             break;
-        case "asc":
+        case "desc":
             return objz.sort(function (sone,stwo) {
                 if (sone[sortby] > stwo[sortby]){
                     return 1;

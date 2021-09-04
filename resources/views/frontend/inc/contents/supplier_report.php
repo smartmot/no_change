@@ -153,17 +153,20 @@
                 }
                 return balance;
             },
-            money(money, curr){
-                switch (curr){
-                    case "usd":
-                        return "$" + (parseInt(money)).toFixed(2);
+            money:function (money,currency){
+                switch (currency){
+                    case "riel":
+                        return numeral(money).format('0,0') + "៛";
                         break;
-                        case "riel":
-                            return parseInt(money)+"រៀល";
-                            break;
-                            case "bath":
-                                return parseInt(money)+"បាត";
-                                break;
+                    case "usd":
+                        return numeral(parseFloat(money)).format('0,0.00$');
+                        break;
+                    case "bath":
+                        return numeral(money).format('0,0') + "បាត";
+                        break;
+                    default:
+                        return numeral(parseFloat(money)).format('$0,0.00');
+                        break;
                 }
             },
             load:function (){

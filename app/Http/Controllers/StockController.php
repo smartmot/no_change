@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StockController extends Controller
 {
@@ -14,11 +15,49 @@ class StockController extends Controller
      */
     public function index(Request $request)
     {
-        $stock = InvoiceItem::query()
-            ->limit(100)
-            ->get()
-            ->toArray();
-        return response($stock);
+        $qty = "SELECT SUM(qty) FROM stocks WHERE item_id = invoice_items.id";
+        $qtys = "SELECT SUM(qty) FROM stocks WHERE item_id = invoice_items.id AND type = 'stock_in'";
+        $sold = "SELECT SUM(qty) FROM stocks WHERE item_id = invoice_items.id AND type = 'sold'";
+        $date = "SELECT date FROM invoices WHERE id = invoice_items.invoice_id";
+        $currency = "SELECT currency FROM invoices WHERE id = invoice_items.invoice_id";
+        $lost = "SELECT SUM(qty) FROM stocks WHERE item_id = invoice_items.id AND type = 'lost'";
+        $stock = DB::table("invoice_items")
+            ->selectRaw("*,($qty) as qty,($qtys) as qtys,-($sold) as sold, ($date) as date, ($currency) as currency, ($lost) as lost")
+            ->limit(50);
+        if ($request->has("keyword") && $request->has("mode")){
+            $mode=["ids","name"];
+            if (!in_array($request->get("mode"), $mode)){
+                exit(json_encode([]));
+            }
+            $stock
+                ->where($request->get("mode"), "LIKE", "%".$request->get("keyword")."%");
+        }
+
+        if ($request->has("date") && $request->has("from") && $request->has("to")){
+            switch ($request->get("date")){
+                case "true":
+                    $stock
+                        ->having("date", ">=", $request->get("from"))
+                        ->having("date", "<=", $request->get("to"));
+                    break;
+            }
+        }
+
+        if ($request->has("num") && $request->has("value")){
+            switch ($request->get("num")){
+                case "true":
+                    if ($request->get("value")!=""){
+                        $stock
+                            ->having("qty", ">=", $request->get("value"));
+                    }
+                    break;
+                case "false":
+                    break;
+            }
+        }
+
+
+        return response($stock->get()->toArray());
     }
 
     /**

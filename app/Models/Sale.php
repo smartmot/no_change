@@ -27,21 +27,17 @@ class Sale extends Model
 
     protected $appends=[
         "paid",
-        "due",
+        "dues",
         "pay_date",
-        "total",
     ];
 
     public function getPaidAttribute(){
         return $this->payments()->sum("paid");
     }
-    public function getDueAttribute(){
-        return $this->payments()->sum("paid");
+    public function getDuesAttribute(){
+        return $this->total - $this->paid;
     }
     public function getPayDateAttribute(){
-        return $this->payments()->latest("created_at")->first()->date;
-    }
-    public function getTotalAttribute(){
-        return $this->items()->get()->sum("amount");
+        return 1;//$this->payments()->latest("created_at")->first()->date;
     }
 }

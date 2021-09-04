@@ -12,6 +12,7 @@ use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Response;
@@ -29,13 +30,16 @@ class FrontendController extends Controller
     }
 
     public function test(){
-        $sale = Sale::query()
-            ->with("items")
+        $qty = "SELECT SUM(qty) FROM stocks WHERE item_id = invoice_items.id";
+        $qtys = "SELECT SUM(qty) FROM stocks WHERE item_id = invoice_items.id AND type = 'stock_in'";
+        $sold = "SELECT SUM(qty) FROM stocks WHERE item_id = invoice_items.id AND type = 'sold'";
+        $date = "SELECT date FROM invoices WHERE id = invoice_items.invoice_id";
+        $stock = DB::table("invoice_items")
+            ->selectRaw("*,($qty) as qty,($qtys) as qtys,-($sold) as sold, ($date) as date")
             ->limit(3)
             ->get()
-            ->where("customer_id", "=", 1)
             ->toArray();
-        dd($sale);
+        dd($stock);
     }
 
     public function buy(){
@@ -56,6 +60,25 @@ class FrontendController extends Controller
 
     public function sell_customer(){
         return view("frontend.sell_customer");
+    }
+    public function customer_stock(Customer $customer){
+        function moneyz($curr, $sum, $c_id){
+            return Sale::query()
+                ->where("customer_id", "=", $c_id)
+                ->where("currency", "=", $curr)->get()->sum($sum);
+        }
+        $total = moneyz("usd", "total", $customer->id) +
+            moneyz("riel", "total", $customer->id)/(config("pos.exchange")["riel_usd"]) +
+            moneyz("bath", "total", $customer->id)/(config("pos.exchange")["bath_usd"]);
+        $paid = moneyz("usd", "paid", $customer->id) +
+            moneyz("riel", "paid", $customer->id)/(config("pos.exchange")["riel_usd"]) +
+            moneyz("bath", "paid", $customer->id)/(config("pos.exchange")["bath_usd"]);
+
+        return view("frontend.customer_stock")->with([
+            "customer" => $customer,
+            "total" => $total,
+            "paid" => $paid,
+        ]);
     }
     public function customer_show(Customer $customer){
         return view("frontend.customer_show")->with([
