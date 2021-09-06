@@ -8,6 +8,7 @@ window.axios = require('axios');
 window.$ = require('jquery');
 window._$ = require('cropperjs');
 window.Vue = require("vue/dist/vue.min");
+
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 

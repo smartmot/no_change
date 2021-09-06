@@ -15,17 +15,21 @@
 require "inc/header.php"
 ?>
 
-<div class="pt_10">
+<div class="pt_20 pr_10 pl_10">
     <div id="customer">
         <div class="rowc">
             <div class="xl-2 lg-2p5 md-3 sm-6 fx_12" v-for="cust in customers">
                 <div class="pr_10 pl_10 pb_10">
                     <div class="pr_10 pl_10 pt_10 pb_10 bc_1 c_2">
                         <div>
-                            <img class="wp_100" v-bind:src="'<?php echo asset("photo"); ?>/'+cust.photo+'_thumb.jpg'"  alt="">
+                            <a :href="'<?php echo route("sell.customer"); ?>/c/'+cust.id" class="ds_b t_d_n">
+                                <img class="wp_100" v-bind:src="'<?php echo asset("photo"); ?>/'+cust.photo+'_thumb.jpg'"  alt="">
+                            </a>
                         </div>
                         <div class="fm-smreap lh_20 fs_15 pt_5">
-                            <div>{{ cust.name }}</div>
+                            <div>
+                                <a :href="'<?php echo route("sell.customer"); ?>/c/'+cust.id" class="t_d_n ds_b c_2 hc-danger">{{ cust.name }}</a>
+                            </div>
                             <div class="ds_f">
                                 <div class="w_30">ID</div>
                                 <div>: 001</div>

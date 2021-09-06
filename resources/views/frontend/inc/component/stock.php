@@ -20,6 +20,12 @@
             search_mode:"ids",
             keyword:"",
             sorts:"date,desc",
+            count:{
+                is:'on',
+                count: '',
+                date: "<?php echo date("Y-m-d"); ?>",
+                item_id:0
+            }
         },
         watch:{
             keyword:{
@@ -106,6 +112,30 @@
             sort:function (){
                 let sortto = this.sorts.split(",");
                 srtz(this.stocks,sortto[0],sortto[1]);
+            },
+            countf:function (idx){
+                let nis = this;
+                axios.post("<?php echo route("stock.store"); ?>", null,{
+                    headers:$_i.headers,
+                    params:{
+                        item_id:nis.count.item_id,
+                        qty:nis.count.count,
+                        type:"lost",
+                        date:nis.count.date,
+                        subject:"count"
+                    }
+                }).then(function (counted){
+                    if (counted.data.error){
+
+                    }else{
+                        nis.stocks[idx].lost = counted.data.data.qty;
+                        nis.stocks[idx].lost_date = counted.data.data.date;
+                        nis.count.is = 'on';
+                        nis.count.count = '';
+                    }
+                }).catch(function (err){
+                    console.log(err.response);
+                })
             },
             timer:setTimeout(function (){},300)
         }

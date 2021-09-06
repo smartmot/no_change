@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\InvoiceItem;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class StockController extends Controller
 {
@@ -20,9 +22,10 @@ class StockController extends Controller
         $sold = "SELECT SUM(qty) FROM stocks WHERE item_id = invoice_items.id AND type = 'sold'";
         $date = "SELECT date FROM invoices WHERE id = invoice_items.invoice_id";
         $currency = "SELECT currency FROM invoices WHERE id = invoice_items.invoice_id";
-        $lost = "SELECT SUM(qty) FROM stocks WHERE item_id = invoice_items.id AND type = 'lost'";
+        $lost = "SELECT qty FROM stocks WHERE item_id = invoice_items.id AND type = 'lost' ORDER BY stocks.date ASC LIMIT 1";
+        $lost_date = "SELECT date FROM stocks WHERE item_id = invoice_items.id AND type = 'lost' ORDER BY stocks.date limit 1";
         $stock = DB::table("invoice_items")
-            ->selectRaw("*,($qty) as qty,($qtys) as qtys,-($sold) as sold, ($date) as date, ($currency) as currency, ($lost) as lost")
+            ->selectRaw("*,($qty) as qty,($qtys) as qtys,-($sold) as sold, ($date) as date, ($currency) as currency, ($lost) as lost, ($lost_date) as lost_date")
             ->limit(50);
         if ($request->has("keyword") && $request->has("mode")){
             $mode=["ids","name"];
@@ -70,7 +73,7 @@ class StockController extends Controller
         //
     }
 
-    /**
+    /*
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -78,7 +81,46 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->has("subject")){
+            switch ($request->get("subject")){
+                case "count":
+                    $validator = Validator::make($request->all(),[
+                        "date" => ["required","date"],
+                        "qty" => ["required"],
+                        "item_id" => ["required", "exists:invoice_items,id"],
+                    ]);
+                    if ($validator->fails()){
+                        $resp = [
+                            "error" => true,
+                            "errors" => $validator->errors()
+                        ];
+                    }else{
+                        $data = $validator->validate();
+                        $item = DB::table("stocks")
+                            ->selectRaw("SUM(qty) as qty")
+                            ->where("item_id", "=", $data["item_id"])
+                            ->first();
+                        $qty = $data["qty"] - $item->qty;
+                        $stock = new Stock([
+                            "item_id"=>$data["item_id"],
+                            "qty"=>$qty,
+                            "type"=>"lost",
+                            "note" => $qty > 0 ? "លើស" : "បាត់ (រាប់ខ្វះ)",
+                            "date"=>$data["date"],
+                        ]);
+                        $stock->save();
+                        $resp = [
+                            "error" => false,
+                            "data" => $stock
+                        ];
+                    }
+                    break;
+            }
+
+            return response($resp);
+        }else{
+            return response([]);
+        }
     }
 
     /**

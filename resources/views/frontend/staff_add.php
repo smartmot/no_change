@@ -15,13 +15,14 @@
 require "inc/header.php"
 ?>
 <?php
-require "inc/staff.php";
+require "inc/layout.php";
 ?>
 <?php
 require "inc/footer.php"
 ?>
 <script type="text/javascript">
     $_accept();
+
 </script>
 </body>
 </html>

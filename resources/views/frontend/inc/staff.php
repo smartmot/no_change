@@ -4,7 +4,7 @@
             <div class="bc_4 child">
                 <div class="pr_20 pl_20 pt_20 pb_20">
                     <?php
-                    require "sidebar/". str_replace(".", "_", request()->route()->getName()) .".php";
+                    require "sidebar/staff.php";
                     ?>
                 </div>
             </div>

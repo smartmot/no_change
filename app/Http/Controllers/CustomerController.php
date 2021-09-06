@@ -132,7 +132,6 @@ class CustomerController extends Controller
 
     public function update_photo(Customer $customer){
         $imagez = "images/cache/upload_". Auth::id() . ".jpg";
-
         $cover = date("Y/m/d/His");
         $foler = "images/";
         if (Storage::disk("local")->exists($imagez)) {

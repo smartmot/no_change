@@ -34,8 +34,14 @@ Route::middleware(["auth"])->group(function (){
     Route::get("/stock",[Controllers\FrontendController::class,"stock"])->name("stock");
     Route::get("/stock/count",[Controllers\FrontendController::class,"stockcount"])->name("stock.count");
     Route::get("/customer",[Controllers\FrontendController::class,"customer"])->name("customer");
-    Route::get("/staff",[Controllers\FrontendController::class,"staff"])->name("staff");
-    Route::get("/staff/add",[Controllers\FrontendController::class,"staffadd"])->name("staff.add");
+    Route::get("/staffs",[Controllers\FrontendController::class,"staff"])->name("staff");
+    Route::get("/staffs/scan",[Controllers\FrontendController::class,"staff_scan"])->name("staff.scan");
+    Route::get("/staffs/list",[Controllers\FrontendController::class,"staff"])->name("staff.list");
+    Route::get("/staffs/report",[Controllers\FrontendController::class,"staff"])->name("staff.report");
+    Route::get("/staff/{staff}",[Controllers\FrontendController::class,"staff_show"])->name("staff.show");
+    Route::get("/staff/{staff}/history",[Controllers\FrontendController::class,"staff_show"])->name("staff.history");
+    Route::get("/staff/{staff}/docs",[Controllers\FrontendController::class,"staff_show"])->name("staff.docs");
+    Route::get("/staffs/add",[Controllers\FrontendController::class,"staffadd"])->name("staff.add");
     Route::get("/report",[Controllers\FrontendController::class,"report"])->name("report");
 
     Route::post("/upload",[Controllers\UploadController::class,"upload"])->name("upload.image");
@@ -61,6 +67,7 @@ Route::get('/script.js', [Controllers\FrontendController::class,"script"])->name
 Route::get('/photo/6x7.jpg', [Controllers\FileController::class,"svg6x7"])->name("svg6x7");
 Route::get('/photo/profile.jpg', [Controllers\FileController::class,"svgprofile"])->name("svgprofile");
 
+Route::get('/a4', [Controllers\FileController::class,"a4jpg"])->name("a4");
 Route::get('/login', [Controllers\LoginController::class,"login"])->name("login");
 Route::post('/login', [Controllers\LoginController::class,"submit"])->name("login.submit");
 Route::post('/logout', [Controllers\LoginController::class,"logout"])->name("logout");

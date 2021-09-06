@@ -39,16 +39,18 @@
                     <span>បានទូទាត់</span>
                 </label>
             </div>
-            <!--<div>
+            <!--
+            <div>
                 <label>
                     <input type="checkbox" v-model="params.popular" class="input-1 bc_1 c_1 oln_n bd_n" @change="load()">
                     <span>ឥវ៉ាន់ដាច់ច្រើន</span>
                 </label>
-            </div>-->
+            </div>
+            -->
         </div>
     </div>
     <div class="pt_10">
-        <div>
+        <div class="fm-smreap">
             <span>Sort by :</span>
         </div>
         <div class="pt_5">
@@ -64,4 +66,3 @@
         </div>
     </div>
 </div>
-<div></div>

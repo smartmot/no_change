@@ -24,11 +24,13 @@ Route::middleware("auth.basic")->group(function (){
     Route::put("supplier/profile/{supplier}",[Controllers\SupplierController::class,"update_profile"])->name("supplier.save");
     Route::apiResource("customer",Controllers\CustomerController::class);
     Route::put("customer/photo/{customer}",[Controllers\CustomerController::class, "update_photo"])->name("customer.save");
+    Route::put("staff/photo/{staff}",[Controllers\StaffController::class, "update_photo"])->name("staff.save");
     Route::apiResource("invoice",Controllers\InvoiceController::class);
     Route::apiResource("payment",Controllers\InvoicePaymentController::class);
     Route::apiResource("invoice_item",Controllers\InvoiceItemController::class);
     Route::apiResource("stock",Controllers\StockController::class);
     Route::apiResource("sale",Controllers\SaleController::class);
+    Route::apiResource("staff",Controllers\StaffController::class);
     Route::get("buy/report", [Controllers\SupplierController::class, "report"])->name("supplier.reports");
     Route::get("buy/stock", [Controllers\SupplierController::class, "stock"])->name("supplier.stocks");
 });

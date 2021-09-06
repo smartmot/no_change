@@ -11,6 +11,7 @@ class Staff extends Model
 
     protected $fillable = [
         "name",
+        "photo",
         "gender",
         "tel",
         "department",
@@ -20,6 +21,7 @@ class Staff extends Model
         "note",
         "code",
         "code_image",
+        "status",
     ];
 
 }

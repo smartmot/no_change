@@ -18,6 +18,7 @@
         "jquery": "^3.6.0"
     },
     "dependencies": {
+        "jsprintmanager": "^4.0.1",
         "vue": "^2.6.14"
     }
 }

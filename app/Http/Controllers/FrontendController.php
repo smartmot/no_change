@@ -8,6 +8,7 @@ use App\Models\InvoiceItem;
 use App\Models\InvoicePayment;
 use App\Models\Sale;
 use App\Models\Setting;
+use App\Models\Staff;
 use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Milon\Barcode\Facades\DNS1DFacade as DNS1D;
+use Milon\Barcode\Facades\DNS2DFacade as DNS2D;
 
 class FrontendController extends Controller
 {
@@ -30,16 +32,9 @@ class FrontendController extends Controller
     }
 
     public function test(){
-        $qty = "SELECT SUM(qty) FROM stocks WHERE item_id = invoice_items.id";
-        $qtys = "SELECT SUM(qty) FROM stocks WHERE item_id = invoice_items.id AND type = 'stock_in'";
-        $sold = "SELECT SUM(qty) FROM stocks WHERE item_id = invoice_items.id AND type = 'sold'";
-        $date = "SELECT date FROM invoices WHERE id = invoice_items.invoice_id";
-        $stock = DB::table("invoice_items")
-            ->selectRaw("*,($qty) as qty,($qtys) as qtys,-($sold) as sold, ($date) as date")
-            ->limit(3)
-            ->get()
-            ->toArray();
-        dd($stock);
+        //echo DNS2D::getBarcodeSVG('SCAN', 'QRCODE',6,6,'#F79321');
+        Storage::disk("local")->put("images/b/scan.svg",DNS2D::getBarcodeSVG('SCAN', 'QRCODE',6,6,'#F79321'));
+
     }
 
     public function buy(){
@@ -105,6 +100,14 @@ class FrontendController extends Controller
         return view("frontend.customer");
     }
 
+    public function staff_show(Staff $staff){
+        return view("frontend.staff_show")->with([
+            "staff" => $staff
+        ]);
+    }
+    public function staff_scan(){
+        return view("frontend.staff_scan");
+    }
     public function staff(){
         return view("frontend.staff");
     }

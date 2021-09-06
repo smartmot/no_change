@@ -19,4 +19,8 @@ class FileController extends Controller
     public function barcode($code){
         return Response::make(DNS1D::getBarcodeSVG($code, 'C128',1,50,"black", true))->header('Content-Type', "image/svg+xml");
     }
+
+    public function a4jpg(){
+        return Response::view("a4")->header('Content-Type', "text/text");
+    }
 }

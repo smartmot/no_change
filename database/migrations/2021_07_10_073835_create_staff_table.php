@@ -18,13 +18,15 @@ class CreateStaffTable extends Migration
             $table->string("name");
             $table->enum("gender",["male","female"]);
             $table->string("tel")->nullable();
+            $table->string("photo")->nullable();
             $table->string("department")->nullable();
-            $table->string("birthdate")->nullable();
-            $table->string("start_date")->nullable();
+            $table->date("birthdate")->nullable();
+            $table->date("start_date")->nullable();
             $table->string("address")->nullable();
             $table->string("note")->nullable();
             $table->string("code")->nullable();
             $table->string("code_image")->nullable();
+            $table->enum("status", ["active", "stop", "f_stop"]);
             $table->timestamps();
         });
     }
