@@ -24,16 +24,23 @@ require "inc/footer.php"
 ?>
 <script type="text/javascript">
     $_accept();
+    setTimeout(function (){
+        $("#keyword").focus();
+    },100);
     setInterval(function (){
         $("#keyword").focus();
     },3000);
     let menu = document.getElementsByClassName("hmenu")[0];
     menu.getElementsByTagName("a")[4].classList.add("active");
+    let timm = setTimeout(function (){},100);
     let scan = new Vue({
         el:".mainpg",
         data:{
             staff:[],
-            keyword:"1",
+            keyword:"",
+            error:false,
+            recent:[],
+            exist:false,
         },
         watch:{
             keyword:{
@@ -42,36 +49,77 @@ require "inc/footer.php"
                     let watch = this;
                     this.timer = setTimeout(function (){
                         if (watch.keyword === ''){
-                            watch.reset();
+                            clearTimeout(timm);
+                            timm = setTimeout(function (){
+                                watch.reset();
+                            },3000);
                         }else{
                             watch.scan();
+                            clearTimeout(timm);
+                            timm = setTimeout(function (){
+                                watch.reset();
+                            },3000);
                         }
                     },200);
+                }
+            },
+            error:{
+                handler(){
+                    if (this.error){
+                        this.play();
+                    }
                 }
             }
         },
         mounted() {
             let nis = this;
-            $_c.watch("config", function (){
-                nis.scan();
-            });
+            setInterval(function (){
+                if (nis.recent.length > 0){
+                    nis.recent.shift();
+                }
+            },20000);
         },
         methods:{
             scan:function (){
                 let scanning = this;
-                axios.get("<?php echo route("staff.index"); ?>",{
-                    headers:$_i.headers,
-                    params:{
-                        mode:"id",
-                        keyword:scanning.keyword
-                    }
-                }).then(function (scanned){
-                    if (scanned.data.length > 0){
-                        scanning.staff = scanned.data[0];
-                    }
-                }).catch(function (error){
-                    alert(error);
-                })
+                let is_recent = this.recent.includes(parseInt(this.keyword));
+                if (is_recent){
+                    this.error = true;
+                    scanning.keyword = '';
+                    setTimeout(function (){
+                        scanning.error = false;
+                    },5000);
+                }else{
+                    scanning.error = false;
+                    axios.post("<?php echo route("scan.store"); ?>",null,{
+                        headers:$_i.headers,
+                        params:{
+                            mode:"id",
+                            keyword:scanning.keyword
+                        }
+                    }).then(function (scanned){
+                        if (!scanned.data.error){
+                            scanning.staff = scanned.data.staff;
+                            scanning.recent.push(parseInt(scanned.data.staff.id));
+                            setTimeout(function (){
+                                scanning.keyword = '';
+                            },100);
+                        }else {
+                            scanning.play();
+                            setTimeout(function (){
+                                scanning.keyword = '';
+                            },100);
+                            if (scanned.data.check){
+                                scanning.staff = scanned.data.staff;
+                                scanning.exist = scanned.data.check;
+                            }else{
+                                scanning.staff = [];
+                            }
+                        }
+                    }).catch(function (error){
+                        alert(error);
+                    })
+                }
             },
             image:function (){
                 let gotted = "<?php echo asset("profile.svg"); ?>";
@@ -86,8 +134,19 @@ require "inc/footer.php"
                 return gotted;
             },
             reset:function (){
-                this.keyword = '';
-                this.staff = [];
+                let nis = this;
+                $("#faderz").slideUp(500);
+                this.timer = setTimeout(function (){
+                    nis.staff = [];
+                    nis.keyword = '';
+                },501);
+                $("#keyword").focus();
+                this.exist = false;
+            },
+            play:function (){
+                let error = document.getElementById("play");
+                error.playbackRate = 1.7;
+                error.play();
             },
             timer:setTimeout(function (){})
         }

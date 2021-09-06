@@ -2143,7 +2143,7 @@ img {
 .sreport td:nth-child(4), .sreport td:nth-child(5), .sreport td:nth-child(7){
     text-align: right;
 }
-input[type="date"]::-webkit-calendar-picker-indicator {
+input[type="date"]::-webkit-calendar-picker-indicator, input[type="month"]::-webkit-calendar-picker-indicator{
     margin: 0;
 }
 

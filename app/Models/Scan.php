@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Scan extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        "staff_id",
+        "time"
+    ];
+
+    public function staff(){
+        return $this->belongsTo(Staff::class);
+    }
 }

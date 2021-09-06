@@ -7,6 +7,7 @@ use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\InvoicePayment;
 use App\Models\Sale;
+use App\Models\Scan;
 use App\Models\Setting;
 use App\Models\Staff;
 use App\Models\Supplier;
@@ -32,9 +33,17 @@ class FrontendController extends Controller
     }
 
     public function test(){
-        //echo DNS2D::getBarcodeSVG('SCAN', 'QRCODE',6,6,'#F79321');
-        Storage::disk("local")->put("images/b/scan.svg",DNS2D::getBarcodeSVG('SCAN', 'QRCODE',6,6,'#F79321'));
-
+        $month = 6;
+        $year = 2021;
+        $scan = DB::table("scans")
+            ->selectRaw("*, DATE(time) as date, MONTH(time) as month, YEAR(time) as year")
+            ->where("staff_id", "=", 1)
+            //->having("month", "=", $month)
+            ->having("year", "=", $year)
+            ->get()
+            ->groupBy("date")
+            ->toArray();
+        dd($scan);
     }
 
     public function buy(){

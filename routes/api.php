@@ -31,6 +31,7 @@ Route::middleware("auth.basic")->group(function (){
     Route::apiResource("stock",Controllers\StockController::class);
     Route::apiResource("sale",Controllers\SaleController::class);
     Route::apiResource("staff",Controllers\StaffController::class);
+    Route::apiResource("scan",Controllers\ScanController::class);
     Route::get("buy/report", [Controllers\SupplierController::class, "report"])->name("supplier.reports");
     Route::get("buy/stock", [Controllers\SupplierController::class, "stock"])->name("supplier.stocks");
 });
