@@ -11,14 +11,14 @@
     ?>
     <script src="<?php echo asset("js/script.js"); ?>"></script>
 </head>
-<body>
+<body class="ovfy_h">
 <?php
 require "inc/header.php";
 ?>
 
-<div class="">
-    <div>
-        <img class="wp_100" src="<?php echo asset("images/home.jpg"); ?>" alt="">
+<div class="ovfy_h">
+    <div class="ovfy_h">
+        <img class="wp_100" src="<?php echo asset("home.jpg"); ?>" alt="">
     </div>
 </div>
 <?php
