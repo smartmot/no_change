@@ -50,12 +50,12 @@
         </div>
         <div v-if="exist" class="pt_10 fm-smreap">
             <div class="ds_f">
-                <div class="w_50">ចូល</div>
-                <div>: {{exist[0].times}}</div>
+                <div class="w_70">ចូលម៉ោង</div>
+                <div>: {{timez(exist[0].times)}}</div>
             </div>
             <div class="ds_f">
-                <div class="w_50">ចេញ</div>
-                <div>: {{exist[1].times}}</div>
+                <div class="w_70">ចេញម៉ោង</div>
+                <div>: {{timez(exist[1].times)}}</div>
             </div>
         </div>
         <audio id="play" class="ds_n" controls>

@@ -2132,6 +2132,29 @@ img {
     width: 100%;
     border-collapse: collapse;
 }
+.cs14 td,.cs14 th{
+    border: 1px solid #c4c4c4;
+    padding: 5px;
+    width: 100px;
+}
+.cs14{
+    border-collapse: collapse;
+    min-width: 400px;
+}
+.cs14 td:nth-child(4){
+    text-align: center;
+}
+.cs14 td:nth-child(4) button{
+    outline: none;
+    border: none;
+    cursor: pointer;
+    padding: 1px 8px;
+    border-radius: 3px;
+    background-color: transparent;
+}
+.cs14 td:nth-child(4) button:hover{
+    color: red;
+}
 .stock th,.stock td,.sreport th, .sreport td, .gentab th, .gentab td{
     border: 1px solid #c4c4c4;
     padding: 5px;
@@ -2255,4 +2278,29 @@ input[type="date"]::-webkit-calendar-picker-indicator, input[type="month"]::-web
         width: 100%;
     }
     .cs11{padding-right: 0;}
+}
+.tb01 td, .tb01 th{
+    border: 1px solid #bab6b6;
+    padding: 3px 10px;
+}
+.tb01{
+    border-collapse: collapse;
+}
+.tb01 td:nth-child(4),
+.tb01 td:nth-child(5),
+.tb01 td:nth-child(6),
+.tb01 td:nth-child(7),
+.tb01 td:nth-child(8)
+{
+    width: 100px;
+}
+.tb01 tbody td:nth-child(8){
+    text-align: right;
+}
+.tb01 td:nth-child(2){
+    width: 150px;
+}
+.tb01 td:first-child, .tb01 td:nth-child(3){
+    width: 40px;
+    text-align: center;
 }

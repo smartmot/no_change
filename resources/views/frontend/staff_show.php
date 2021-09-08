@@ -20,7 +20,12 @@ require "inc/staff_show.php";
 ?>
 
 <?php
-require "inc/footer.php"
+require "inc/footer.php";
+switch (request()->route()->getName()){
+    case "staff.show":
+        require "inc/component/staff/staff_show.php";
+        break;
+}
 ?>
 <script type="text/javascript">
     $_accept();
@@ -79,6 +84,13 @@ require "inc/footer.php"
                             <label for="address">ផ្នែក<span v-if="errors.department" class="c_6"> : {{ errors.department[0] }}</span></label>
                             <div class="ds_f">
                                 <input id="address" v-model="params.department" name="address" type="text" class="oln_n bd_n pr_10 pl_10 fm-smreap wp_100 pt_2 pb_2 input-2">
+                            </div>
+                        </div>
+
+                        <div class="pt_4">
+                            <label for="salary">ប្រាក់ខែ _$<span v-if="errors.department" class="c_6"> : {{ errors.department[0] }}</span></label>
+                            <div class="ds_f">
+                                <input id="salary" v-model="params.salary" name="salary" type="number" class="oln_n bd_n pr_10 pl_10 fm-smreap wp_100 pt_2 pb_2 input-2">
                             </div>
                         </div>
 
@@ -161,14 +173,15 @@ require "inc/footer.php"
         el:"#edit_cus",
         data:{
             params:{
-                name:"<?php echo $staff->name; ?>",
-                gender:"<?php echo $staff->gender; ?>",
-                tel:"<?php echo $staff->tel; ?>",
-                address:"<?php echo $staff->address; ?>",
-                note:"<?php echo $staff->note; ?>",
-                birthdate:"<?php echo $staff->birthdate; ?>",
-                start_date:"<?php echo $staff->start_date; ?>",
-                department:"<?php echo $staff->department; ?>",
+                name:"<?php echo $staff["name"]; ?>",
+                gender:"<?php echo $staff["gender"]; ?>",
+                tel:"<?php echo $staff["tel"]; ?>",
+                address:"<?php echo $staff["address"]; ?>",
+                note:"<?php echo $staff["note"]; ?>",
+                birthdate:"<?php echo $staff["birthdate"]; ?>",
+                start_date:"<?php echo $staff["start_date"]; ?>",
+                department:"<?php echo $staff["department"]; ?>",
+                salary:"<?php echo number_format($staff["pre_salary"]); ?>",
             },
             edit:false,
             errors:[]
@@ -199,14 +212,15 @@ require "inc/footer.php"
         el:"#subbar",
         data: {
             staff:{
-                name:"<?php echo $staff->name; ?>",
-                gender:"<?php echo $staff->gender; ?>",
-                tel:"<?php echo $staff->tel; ?>",
-                address:"<?php echo $staff->address; ?>",
-                note:"<?php echo $staff->note; ?>",
-                birthdate:"<?php echo $staff->birthdate; ?>",
-                start_date:"<?php echo $staff->start_date; ?>",
-                department:"<?php echo $staff->department; ?>",
+                name:"<?php echo $staff["name"]; ?>",
+                gender:"<?php echo $staff["gender"]; ?>",
+                tel:"<?php echo $staff["tel"]; ?>",
+                address:"<?php echo $staff["address"]; ?>",
+                note:"<?php echo $staff["note"]; ?>",
+                birthdate:"<?php echo $staff["birthdate"]; ?>",
+                start_date:"<?php echo $staff["start_date"]; ?>",
+                department:"<?php echo $staff["department"]; ?>",
+                salary:"<?php echo number_format($staff["pre_salary"]); ?>",
             },
             photo:"<?php echo $staff->photo; ?>",
         },
@@ -294,7 +308,7 @@ require "inc/footer.php"
                     setTimeout(function (){
                         $("#progz1").addClass("ts_050");
                     },1000);
-                    $("#newimgz").attr("src", "<?php echo asset("photo/".$staff->photo."_thumb.jpg"); ?>");
+                    $("#newimgz").attr("src", "<?php echo asset("photo/".$staff["photo"]."_thumb.jpg"); ?>");
                     $("#errorz").text("ការបង្ហោះបរាជ័យ! *<15MB");
                 }
             },

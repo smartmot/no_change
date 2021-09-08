@@ -40,14 +40,14 @@
             </div>
         </div>
 
-        <div class="ds_f pt_5">
+        <div class="ds_f pt_5" title="ប្រាក់ខែ">
             <div class="w_40">
                 <div class="h_25 w_25 t_a_c lh_25 bc-success c_2 b_r_c">
-                    <span class="fa fa-home"></span>
+                    <span class="fa fa-dollar"></span>
                 </div>
             </div>
-            <div class="lh_25 w100-40 fm-smreap" v-if="staff.address != ''">{{staff.address}}</div>
-            <div class="lh_25 w100-40 fm-smreap opc_50" v-if="staff.address === ''"><i>គ្មាន</i></div>
+            <div class="lh_25 w100-40 fm-smreap" v-if="staff.salary != 0">{{staff.salary}}</div>
+            <div class="lh_25 w100-40 fm-smreap opc_50" v-if="staff.salary == 0"><i>មិនទាន់កំណត់</i></div>
         </div>
 
     </div>

@@ -103,6 +103,7 @@ require "inc/footer.php"
                             scanning.recent.push(parseInt(scanned.data.staff.id));
                             setTimeout(function (){
                                 scanning.keyword = '';
+                                $("#faderz").show();
                             },100);
                         }else {
                             scanning.play();
@@ -112,8 +113,10 @@ require "inc/footer.php"
                             if (scanned.data.check){
                                 scanning.staff = scanned.data.staff;
                                 scanning.exist = scanned.data.check;
+                                $("#faderz").show();
                             }else{
                                 scanning.staff = [];
+                                scanning.exist = false;
                             }
                         }
                     }).catch(function (error){
@@ -135,11 +138,11 @@ require "inc/footer.php"
             },
             reset:function (){
                 let nis = this;
-                $("#faderz").slideUp(500);
+                $("#faderz").slideUp(300);
                 this.timer = setTimeout(function (){
                     nis.staff = [];
                     nis.keyword = '';
-                },501);
+                },300);
                 $("#keyword").focus();
                 this.exist = false;
             },
@@ -147,6 +150,16 @@ require "inc/footer.php"
                 let error = document.getElementById("play");
                 error.playbackRate = 1.7;
                 error.play();
+            },
+            timez:function (valis){
+                var timz = valis.split(":");
+                var hour = timz[0];
+                var a_p = " AM";
+                if (hour > 12){
+                    hour = hour - 12;
+                    a_p = " PM";
+                }
+                return numeral(hour).format("00") + ":" + numeral(timz[1]).format("00") + a_p;
             },
             timer:setTimeout(function (){})
         }

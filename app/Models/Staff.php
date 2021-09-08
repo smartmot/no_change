@@ -24,4 +24,18 @@ class Staff extends Model
         "status",
     ];
 
+    public function salary(){
+        return $this
+            ->hasOne(StaffSalary::class, "staff_id")
+            ->where("status", "=", "primary");
+    }
+
+    protected $appends = [
+        "pre_salary",
+    ];
+
+    public function getPreSalaryAttribute(){
+        $salary = $this->salary()->first();
+        return $salary === null ? null : $salary->salary;
+    }
 }

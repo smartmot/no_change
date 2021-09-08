@@ -15,4 +15,8 @@ class StaffSalary extends Model
         "date",
         "status",
     ];
+
+    public function staff(){
+        return $this->belongsTo(Staff::class);
+    }
 }

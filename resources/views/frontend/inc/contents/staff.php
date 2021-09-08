@@ -5,7 +5,7 @@
                 <div class="bc_1 pr_10 pl_10 pt_10 pb_10">
                     <div>
                         <a class="t_d_n ds_b" :href="'<?php echo asset("staff"); ?>/'+staff.id">
-                            <img class="wp_100" :src="'<?php echo asset("photo"); ?>/' + staff.photo + '_thumb.jpg'" alt="">
+                            <img class="wp_100" :src="staff.photo === null ? '<?php echo asset('profile.svg'); ?>' : '<?php echo asset("photo"); ?>/' + staff.photo + '_thumb.jpg'" alt="">
                         </a>
                     </div>
                     <div class="fm-smreap lh_20 fs_15 pt_5 c_2 pt_10">

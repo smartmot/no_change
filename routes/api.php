@@ -34,4 +34,5 @@ Route::middleware("auth.basic")->group(function (){
     Route::apiResource("scan",Controllers\ScanController::class);
     Route::get("buy/report", [Controllers\SupplierController::class, "report"])->name("supplier.reports");
     Route::get("buy/stock", [Controllers\SupplierController::class, "stock"])->name("supplier.stocks");
+    Route::delete("del/scan", [Controllers\Front\StaffController::class, "delete_scan"])->name("del.scan");
 });

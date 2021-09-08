@@ -33,17 +33,7 @@ class FrontendController extends Controller
     }
 
     public function test(){
-        $month = 6;
-        $year = 2021;
-        $scan = DB::table("scans")
-            ->selectRaw("*, DATE(time) as date, MONTH(time) as month, YEAR(time) as year")
-            ->where("staff_id", "=", 1)
-            //->having("month", "=", $month)
-            ->having("year", "=", $year)
-            ->get()
-            ->groupBy("date")
-            ->toArray();
-        dd($scan);
+
     }
 
     public function buy(){
@@ -116,6 +106,9 @@ class FrontendController extends Controller
     }
     public function staff_scan(){
         return view("frontend.staff_scan");
+    }
+    public function staff_report(){
+        return view("frontend.staff_report");
     }
     public function staff(){
         return view("frontend.staff");

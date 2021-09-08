@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Staff;
+use App\Models\StaffSalary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -19,6 +20,7 @@ class StaffController extends Controller
     public function index(Request $request)
     {
         $staff = Staff::query()
+            ->with("salary")
             ->limit(50);
         if ($request->has("keyword") && $request->has("mode")){
             switch ($request->get("mode")){
@@ -52,6 +54,7 @@ class StaffController extends Controller
             "department" => ["required", "max:255"],
             "birthdate" => ["required", "date"],
             "start_date" => ["required", "date"],
+            "salary" => ["required"]
         ]);
         if ($validator->fails()){
             return response([
@@ -72,10 +75,26 @@ class StaffController extends Controller
                 $photo->save($photo->dirname."/".$photo->filename."_thumb.".$photo->extension);
                 $thumb = $cover;
             }
-            $data["photo"] = $thumb;
-            $data["status"] = "active";
-            $staff = new Staff($data);
+            $staff = new Staff([
+                "name" => $data["name"],
+                "gender" => $data["gender"],
+                "tel" => $data["tel"],
+                "address" => $data["address"],
+                "note" => $data["note"],
+                "department" => $data["department"],
+                "birthdate" => $data["birthdate"],
+                "start_date" => $data["start_date"],
+                "status" => "active",
+                "photo" => $thumb
+            ]);
             $staff->save();
+            $salary = new StaffSalary([
+                "staff_id" => $staff->id,
+                "salary" => $data["salary"],
+                "date" => date("Y-m-d H:i:s"), //H:i:s
+                "status" => "primary",
+            ]);
+            $salary->save();
             return response([
                 "error" => false
             ]);
@@ -111,8 +130,8 @@ class StaffController extends Controller
             "department" => ["required", "max:255"],
             "birthdate" => ["required", "date"],
             "start_date" => ["required", "date"],
+            "salary" => ["required"],
         ]);
-
         if ($validator->fails()){
             return response([
                 "error" => true,
@@ -120,8 +139,34 @@ class StaffController extends Controller
             ]);
         }else{
             $data = $validator->validate();
-            $staff->update($data);
+            $staff->update([
+                "name" => $data["name"],
+                "gender" => $data["gender"],
+                "tel" => $data["tel"],
+                "address" => $data["address"],
+                "note" => $data["note"],
+                "department" => $data["department"],
+                "birthdate" => $data["birthdate"],
+                "start_date" => $data["start_date"],
+            ]);
             $staff->save();
+
+            if ($staff->pre_salary != $data["salary"]){
+                StaffSalary::query()
+                    ->where("staff_id", "=", $staff->id)
+                    ->where("status", "=", "primary")
+                    ->update([
+                        "status" => "previous"
+                    ]);
+                $salary = new StaffSalary([
+                    "staff_id" => $staff->id,
+                    "salary" => $data["salary"],
+                    "date" => date("Y-m-d H:i:s"), //H:i:s
+                    "status" => "primary",
+                ]);
+                $salary->save();
+            }
+
             return response([
                 "error" => false
             ]);
@@ -166,6 +211,10 @@ class StaffController extends Controller
     }
 
     public function docs(Staff $staff){
+
+    }
+
+    public function report(){
 
     }
 }

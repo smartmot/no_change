@@ -74,6 +74,13 @@
                         </div>
 
                         <div class="pt_5 fm-smreap">
+                            <label for="salary">ប្រាក់ខែ<span v-if="errors.salary" class="c_6"> : {{ errors.salary[0] }}</span></label>
+                            <div class="ds_f">
+                                <input id="salary" v-model="params.salary" type="number" class="input-1 box-s4 bd_n b_r_4 pt_3 pb_3 fm-smreap wp_100 fs_16 pr_10 pl_10">
+                            </div>
+                        </div>
+
+                        <div class="pt_5 fm-smreap">
                             <label for="address">អាសយដ្ឋាន<span v-if="errors.address" class="c_6"> : {{ errors.address[0] }}</span></label>
                             <div class="ds_f">
                                 <input id="address" v-model="params.address" name="address" class="input-1 box-s4 bd_n b_r_4 pt_3 pb_3 fm-smreap wp_100 fs_16 pr_10 pl_10">

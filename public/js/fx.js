@@ -163,3 +163,30 @@ Object.defineProperty(Object.prototype,"watch",{
         }
     }
 });
+
+const a_a = {
+    date:function (date, format='general'){
+        let dmy = date.split("-");
+        switch (format){
+            case "general":
+                return numeral(dmy[2]).format("00") + "/" + numeral(dmy[1]).format("00") + "/" + dmy[0];
+                break;
+            default:
+                return numeral(dmy[2]).format("00") + "-" + this.month[parseInt(dmy[1])] + "-" + dmy[0];
+        }
+    },
+    month:{
+        1:"មករា",
+        2:"កុម្ភៈ",
+        3:"មីនា",
+        4:"មេសា",
+        5:"ឧសភា",
+        6:"មិថុនា",
+        7:"កក្កដា",
+        8:"សីហា",
+        9:"កញ្ញា",
+        10:"តុលា",
+        11:"វិច្ឆិកា",
+        12:"ធ្នូរ",
+    }
+}

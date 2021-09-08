@@ -37,7 +37,7 @@ Route::middleware(["auth"])->group(function (){
     Route::get("/staffs",[Controllers\FrontendController::class,"staff"])->name("staff");
     Route::get("/staffs/scan",[Controllers\FrontendController::class,"staff_scan"])->name("staff.scan");
     Route::get("/staffs/list",[Controllers\FrontendController::class,"staff"])->name("staff.list");
-    Route::get("/staffs/report",[Controllers\FrontendController::class,"staff"])->name("staff.report");
+    Route::get("/staffs/report",[Controllers\FrontendController::class,"staff_report"])->name("staff.report");
     Route::get("/staff/{staff}",[Controllers\FrontendController::class,"staff_show"])->name("staff.show");
     Route::get("/staff/{staff}/history",[Controllers\FrontendController::class,"staff_show"])->name("staff.history");
     Route::get("/staff/{staff}/docs",[Controllers\FrontendController::class,"staff_show"])->name("staff.docs");

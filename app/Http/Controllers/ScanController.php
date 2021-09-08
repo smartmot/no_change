@@ -18,7 +18,7 @@ class ScanController extends Controller
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            "staff_id" => ["required"],
+            "staff_id" => ["required", "exists:staff,id"],
             "month" => ["required"]
         ]);
         if ($validator->fails()){
@@ -69,7 +69,7 @@ class ScanController extends Controller
                 ->first();
             if ($staff){
                 $check = DB::table("scans")
-                    ->selectRaw("*, DATE(time) as date, TIME(time) as times")
+                    ->selectRaw("*, DATE(time) as date, TIME(created_at) as times")
                     ->where("staff_id", "=", $staff->id)
                     ->having("date", "=", date("Y-m-d"))
                     ->get()
@@ -115,7 +115,7 @@ class ScanController extends Controller
         //
     }
 
-    /**
+    /*
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Scan  $scan
@@ -123,7 +123,7 @@ class ScanController extends Controller
      */
     public function edit(Scan $scan)
     {
-        //
+
     }
 
     /**
@@ -138,7 +138,7 @@ class ScanController extends Controller
         //
     }
 
-    /**
+    /*
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Scan  $scan

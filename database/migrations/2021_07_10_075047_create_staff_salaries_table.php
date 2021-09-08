@@ -17,7 +17,7 @@ class CreateStaffSalariesTable extends Migration
             $table->id();
             $table->foreignId("staff_id");
             $table->decimal("salary");
-            $table->date("date");
+            $table->dateTime("date");
             $table->enum("status",["primary","previous"]);
             $table->timestamps();
         });
