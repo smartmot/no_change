@@ -33,6 +33,18 @@ class FrontendController extends Controller
     }
 
     public function test(){
+        $data = DB::table("scans")
+            ->selectRaw("DATE(time) as date, (HOUR(time)*60 + MINUTE(time)) as min")
+            ->where("staff_id", "=", 1)
+            ->get()
+            ->groupBy("date")
+            ->toArray();
+        $wh = 0;
+        foreach ($data as $day){
+            if (count($day) === 2){
+                $wh += ($day[1]->min - $day[0]->min)/60;
+            }
+        }
 
     }
 
