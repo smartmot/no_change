@@ -67,9 +67,9 @@ require "inc/footer.php"
                 <div class="w_100">ប្រាក់ខែ</div>
                 <div>: {{numeral((payto.pre_salary/30)*payto.work).format("$0,0.00")}}</div>
             </div>
-            <div class="pt_10">
-                <label for="pay">បើកប្រាក់ខែ _$</label>
-            </div>
+           <div class="pt_10">
+               <label for="pay">បើកប្រាក់ខែ _$</label>
+           </div>
             <form action="javascript:void 0" method="post" @submit="pay()">
                 <div class="ds_f">
                     <input class="default" type="number" step="any" v-model="paid" id="pay" placeholder="ប្រាក់ខែបើកជាក់ស្ដែង" autofocus>
@@ -92,11 +92,9 @@ require "inc/footer.php"
                         <div class="flx">
                         </div>
                         <div>
-                            <button :class="'default'+(paying?' loading':'')" type="submit">
-                                <span class="ds_f">
-                                    <span class="h_30">បើកលុយ&nbsp;</span>
-                                    <span class="qx qx-loading" v-if="paying"></span>
-                                </span>
+                            <button type="submit" class="hbc-danger h_30 lh_30 pr_7 pl_7 fm-smreap oln_n bd_n bc_1 c_2 csr-p b_r_3 progress">
+                                <span class="">បើកប្រាក់ខែ</span>
+                                <img class="h_25 pt_2 pb_3" src="<?php echo asset("icon/loading.svg"); ?>" alt="">
                             </button>
                         </div>
                     </div>
@@ -119,49 +117,42 @@ require "inc/footer.php"
             pay_date:"<?php echo date("Y-m-d"); ?>",
             index:0,
             errors:[],
-            continuous:false,
-            paying:false,
+            continuous:false
         },
         methods:{
             pay:function (){
                 let nis = this;
-                if (!nis.paying){
-                    nis.paying = true;
-                    setTimeout(function (){
-                        nis.paying = false;
-                    },1000);
-                    axios.post("<?php echo route("salary.store"); ?>", null, {
-                        headers:$_i.headers,
-                        params:{
-                            staff_id:nis.payto.id,
-                            for:staff.month,
-                            date:nis.pay_date,
-                            salary:nis.paid
-                        }
-                    })
-                        .then(function (paid){
-                            if (paid.data.error){
-                                nis.errors = paid.data.errors;
-                            }else{
-                                nis.payto.is_paid = paid.data.paid;
-                                staff.staffs[nis.index] = nis.payto;
-                                if (nis.continuous){
-                                    nis.index+=1
-                                    if (staff.staffs[nis.index]){
-                                        nis.payto = staff.staffs[nis.index];
-                                        nis.paid = ((nis.payto.pre_salary/30)*nis.payto.work).toFixed(2);
-                                        if (nis.payto.is_paid){
-                                            nis.pay_progress = false;
-                                        }
-                                    }else{
-                                        nis.pay_progress = false;
-                                    }
-                                }else{
+                axios.post("<?php echo route("salary.store"); ?>", null, {
+                    headers:$_i.headers,
+                    params:{
+                        staff_id:nis.payto.id,
+                        for:staff.month,
+                        date:nis.pay_date,
+                        salary:nis.paid
+                    }
+                })
+                .then(function (paid){
+                    if (paid.data.error){
+                        nis.errors = paid.data.errors;
+                    }else{
+                        nis.payto.is_paid = paid.data.paid;
+                        staff.staffs[nis.index] = nis.payto;
+                        if (nis.continuous){
+                            nis.index+=1
+                            if (staff.staffs[nis.index]){
+                                nis.payto = staff.staffs[nis.index];
+                                nis.paid = ((nis.payto.pre_salary/30)*nis.payto.work).toFixed(2);
+                                if (nis.payto.is_paid){
                                     nis.pay_progress = false;
                                 }
+                            }else{
+                                nis.pay_progress = false;
                             }
-                        })
-                }
+                        }else{
+                            nis.pay_progress = false;
+                        }
+                    }
+                })
             },
             date:function (){
                 let str = staff.month.split("-");

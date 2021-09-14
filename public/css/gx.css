@@ -1,0 +1,14 @@
+.qx{position: relative;user-select: none; display: inline-block}
+.qx-loading{width: 16px;height: 30px;}
+.qx-loading:before{
+    position: absolute;
+    top: 2px;
+    right: 0;
+    height: 26px;
+    width: 16px;
+    content: "";
+    background-image: url("../qx/pulse.svg");
+    background-size: 16px 26px;
+    background-repeat: no-repeat;
+    user-select: none;
+}

@@ -30,7 +30,12 @@ Route::middleware("auth.basic")->group(function (){
     Route::apiResource("invoice_item",Controllers\InvoiceItemController::class);
     Route::apiResource("stock",Controllers\StockController::class);
     Route::apiResource("sale",Controllers\SaleController::class);
+    Route::apiResource("salary",Controllers\SalaryPaymentController::class);
     Route::apiResource("staff",Controllers\StaffController::class);
+    Route::get("report/staff", [Controllers\StaffController::class, "report"])->name("report.staff");
+    Route::get("report/expense", [Controllers\ReportController::class, "expense"])->name("expense.report");
+    Route::get("report/income", [Controllers\ReportController::class, "income"])->name("expense.income");
+    Route::get("report/net", [Controllers\ReportController::class, "net"])->name("expense.net");
     Route::apiResource("scan",Controllers\ScanController::class);
     Route::get("buy/report", [Controllers\SupplierController::class, "report"])->name("supplier.reports");
     Route::get("buy/stock", [Controllers\SupplierController::class, "stock"])->name("supplier.stocks");

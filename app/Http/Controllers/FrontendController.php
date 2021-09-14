@@ -6,12 +6,19 @@ use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\InvoicePayment;
+use App\Models\Report\DailyExpense;
+use App\Models\Report\DailyIncome;
+use App\Models\Report\MonthlyExpense;
+use App\Models\Report\MonthlyIncome;
+use App\Models\Report\YearlyExpense;
 use App\Models\Sale;
 use App\Models\Scan;
 use App\Models\Setting;
 use App\Models\Staff;
 use App\Models\Supplier;
 use App\Models\User;
+use App\Models\Worker;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -32,20 +39,30 @@ class FrontendController extends Controller
         ]);
     }
 
-    public function test(){
-        $data = DB::table("scans")
-            ->selectRaw("DATE(time) as date, (HOUR(time)*60 + MINUTE(time)) as min")
-            ->where("staff_id", "=", 1)
+    public function test(Request $request){
+        $sales = MonthlyIncome::query()
+            ->selectRaw("COUNT(id) no, DATE_FORMAT(date, '%Y-%m') month")
+            ->groupBy("month")
+            ->get()->toArray();
+        dd($sales);
+        $staff = Staff::query()
             ->get()
-            ->groupBy("date")
             ->toArray();
-        $wh = 0;
-        foreach ($data as $day){
-            if (count($day) === 2){
-                $wh += ($day[1]->min - $day[0]->min)/60;
+        foreach ($staff as $stf){
+            for ($index=1; $index<=30; $index++){
+                DB::table("scans")
+                    ->insert([
+                        [
+                            "staff_id" => $stf["id"],
+                            "time" => date("Y-01-").$index." 5:00:00"
+                        ],
+                        [
+                            "staff_id" => $stf["id"],
+                            "time" => date("Y-01-").$index." 17:00:00"
+                        ]
+                    ]);
             }
         }
-
     }
 
     public function buy(){
@@ -121,6 +138,9 @@ class FrontendController extends Controller
     }
     public function staff_report(){
         return view("frontend.staff_report");
+    }
+    public function staff_salary(){
+        return view("frontend.staff_salary");
     }
     public function staff(){
         return view("frontend.staff");

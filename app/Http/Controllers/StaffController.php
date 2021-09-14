@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Staff;
 use App\Models\StaffSalary;
+use App\Models\Worker;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -214,7 +216,12 @@ class StaffController extends Controller
 
     }
 
-    public function report(){
-
+    public function report(Request $request){
+        $s_month = $request->has("month") ? date_format(date_create($request->get("month")."-01"), "Y-").((int)date_format(date_create($request->get("month")."-01"), "m")+1)."-01" : date("Y-").((int)date("m") +1)."-30";
+        $staffs = Worker::query()
+            ->whereDate("created_at", "<", $s_month)
+            ->get()
+            ->toArray();
+        return response($staffs);
     }
 }

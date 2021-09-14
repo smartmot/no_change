@@ -165,14 +165,14 @@ Object.defineProperty(Object.prototype,"watch",{
 });
 
 const a_a = {
-    date:function (date, format='general'){
+    date:function (date, format='general', seperator='-'){
         let dmy = date.split("-");
         switch (format){
             case "general":
-                return numeral(dmy[2]).format("00") + "/" + numeral(dmy[1]).format("00") + "/" + dmy[0];
+                return numeral(dmy[2]).format("00") + seperator + numeral(dmy[1]).format("00") + seperator + dmy[0];
                 break;
             default:
-                return numeral(dmy[2]).format("00") + "-" + this.month[parseInt(dmy[1])] + "-" + dmy[0];
+                return numeral(dmy[2]).format("00") + seperator + this.month[parseInt(dmy[1])] + seperator + dmy[0];
         }
     },
     month:{
@@ -188,5 +188,26 @@ const a_a = {
         10:"តុលា",
         11:"វិច្ឆិកា",
         12:"ធ្នូរ",
+    },
+    mon:function (monz, separator =' '){
+        let ym = monz.split("-");
+        return this.month[parseInt(ym[1])] + separator + ym[0];
     }
+    ,
+    money:function (money,currency){
+        switch (currency){
+            case "riel":
+                return numeral(money).format('0,0') + "៛";
+                break;
+            case "usd":
+                return numeral(parseFloat(money)).format('0,0.00$');
+                break;
+            case "bath":
+                return numeral(money).format('0,0') + "បាត";
+                break;
+            default:
+                return numeral(parseFloat(money)).format('$0,0.00');
+                break;
+        }
+    },
 }

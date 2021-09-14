@@ -38,11 +38,14 @@ Route::middleware(["auth"])->group(function (){
     Route::get("/staffs/scan",[Controllers\FrontendController::class,"staff_scan"])->name("staff.scan");
     Route::get("/staffs/list",[Controllers\FrontendController::class,"staff"])->name("staff.list");
     Route::get("/staffs/report",[Controllers\FrontendController::class,"staff_report"])->name("staff.report");
+    Route::get("/staffs/salary",[Controllers\FrontendController::class,"staff_salary"])->name("staff.salary");
     Route::get("/staff/{staff}",[Controllers\FrontendController::class,"staff_show"])->name("staff.show");
     Route::get("/staff/{staff}/history",[Controllers\FrontendController::class,"staff_show"])->name("staff.history");
     Route::get("/staff/{staff}/docs",[Controllers\FrontendController::class,"staff_show"])->name("staff.docs");
     Route::get("/staffs/add",[Controllers\FrontendController::class,"staffadd"])->name("staff.add");
     Route::get("/report",[Controllers\FrontendController::class,"report"])->name("report");
+    Route::get("/report/expence",[Controllers\FrontendController::class,"report"])->name("report.expence");
+    Route::get("/report/net",[Controllers\FrontendController::class,"report"])->name("report.net");
 
     Route::post("/upload",[Controllers\UploadController::class,"upload"])->name("upload.image");
     Route::post("/upload/inv",[Controllers\UploadController::class,"invoice"])->name("upload.invoice");
