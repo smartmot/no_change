@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Calendar;
 use App\Models\SalaryPayment;
 use App\Models\Staff;
 use App\Models\Worker;
@@ -69,6 +70,9 @@ class SalaryPaymentController extends Controller
             ];
             $pay = new SalaryPayment($payment);
             $pay->save();
+            Calendar::firstOrCreate([
+                "date" => date("Y-m-d"),
+            ]);
             return response([
                 "error" => false,
                 "paid" => $pay->toArray()

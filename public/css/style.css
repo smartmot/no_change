@@ -2280,11 +2280,15 @@ input[type="date"]::-webkit-calendar-picker-indicator, input[type="month"]::-web
     }
     .cs11{padding-right: 0;}
 }
-.tb01 td, .tb01 th, .tb02 td, .tb02 th,.tb03 td, .tb03 th,.tb04 td, .tb04 th{
+.tb01 td, .tb01 th,
+.tb02 td, .tb02 th,
+.tb03 td, .tb03 th,
+.tb04 td, .tb04 th,
+.tb05 td, .tb05 th{
     border: 1px solid #bab6b6;
     padding: 3px 10px;
 }
-.tb01, .tb03, .tb04{
+.tb01, .tb03, .tb04, .tb05{
     border-collapse: collapse;
 }
 .tb01 td:nth-child(4),
@@ -2364,6 +2368,14 @@ input[type="date"]::-webkit-calendar-picker-indicator, input[type="month"]::-web
 .tb04 tbody td:nth-child(4){
     text-align: right;
 }
+.tb05 td:first-child{width: 40px;text-align: center}
+.tb05 td:nth-child(2){width: 90px;}
+.tb05 td:nth-child(3),
+.tb05 td:nth-child(4),
+.tb05 td:nth-child(5),
+.tb05 td:nth-child(6),
+.tb05 td:nth-child(7)
+{min-width: 120px;}
 /*
 input-2 wp_100 fm-smreap pr_10 pl_10 b_r_4 pb_3 pt_3
  */

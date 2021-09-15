@@ -9,21 +9,31 @@
             </select>
         </div>
         <div class="pt_10 ovfx_a">
-            <table class="tb04 fm-smreap">
+            <table class="tb05 fm-smreap">
                 <thead class="bc_1 c_2 fw_b t_a_c">
                 <tr>
                     <td>ល.រ</td>
                     <td>{{ name[filter] }}</td>
-                    <td>វិក័យប័ត្រ</td>
-                    <td>សរុប</td>
-                    <td>ទូទាត់</td>
-                    <td>នៅខ្វះ</td>
+                    <td>ចំណូល</td>
+                    <td>ចំណាយ</td>
+                    <td>ចំ.បុគ្គលិគ</td>
+                    <td>ចំណេញ</td>
+                    <td>ជំពាក់អ្នកផ្គត់ផ្គង់</td>
+                    <td>អតិថិជនជំពាក់</td>
+                    <td>លុយជាក់ស្ដែង</td>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="(net, ikey) in net_incomes">
                     <td>{{ikey+1}}</td>
-                    <td></td>
+                    <td>{{net.date ? a_a.date(net.date) : (net.month ? a_a.mon(net.month) : net.year)}}</td>
+                    <td>{{a_a.money(net.income.total)}}</td>
+                    <td>{{a_a.money(net.expense)}}</td>
+                    <td>{{a_a.money(net.salary)}}</td>
+                    <td>{{a_a.money(net.net)}}</td>
+                    <td>{{a_a.money(net.sup_due)}}</td>
+                    <td :class="net.income.total === net.income.paid ? 'paid':'due'">{{a_a.money(net.income.total - net.income.paid)}}</td>
+                    <td>{{a_a.money(net.net - (net.income.total - net.income.paid) + net.sup_due)}}</td>
                 </tr>
                 </tbody>
             </table>
@@ -52,7 +62,7 @@
         methods:{
             load:function (){
                 let nis = this;
-                axios.get("<?php echo route("expense.income");?>",{
+                axios.get("<?php echo route("expense.net");?>",{
                     headers:$_i.headers,
                     params:{
                         filter:nis.filter

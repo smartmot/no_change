@@ -99,6 +99,7 @@ require "inc/footer.php"
                         }
                     }).then(function (scanned){
                         if (!scanned.data.error){
+                            scanning.exist = false;
                             scanning.staff = scanned.data.staff;
                             scanning.recent.push(parseInt(scanned.data.staff.id));
                             setTimeout(function (){

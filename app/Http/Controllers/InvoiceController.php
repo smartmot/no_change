@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Calendar;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\InvoicePayment;
@@ -150,6 +151,9 @@ class InvoiceController extends Controller
             ]);
             $stock->save();
         }
+        Calendar::firstOrCreate([
+            "date" => date("Y-m-d"),
+        ]);
         return response([
             "error" => false,
         ]);

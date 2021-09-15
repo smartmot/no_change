@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Calendar;
 use App\Models\Sale;
 use App\Models\SaleItem;
 use App\Models\SalePayment;
@@ -143,6 +144,10 @@ class SaleController extends Controller
             $resp = [
                 "error" => false,
             ];
+            $calendar = Calendar::firstOrCreate([
+                "date" => date("Y-m-d"),
+            ]);
+
             return response($resp);
         }
     }

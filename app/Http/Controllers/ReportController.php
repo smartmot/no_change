@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Calendar;
 use App\Models\Invoice;
 use App\Models\Report\DailyExpense;
 use App\Models\Report\DailyIncome;
+use App\Models\Report\DailyNetIncome;
 use App\Models\Report\MonthlyExpense;
 use App\Models\Report\MonthlyIncome;
+use App\Models\Report\MonthlyNetIncome;
 use App\Models\Report\YearlyExpense;
 use App\Models\Report\YearlyIncome;
+use App\Models\Report\YearlyNetIncome;
 use App\Models\Sale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -91,13 +95,23 @@ class ReportController extends Controller
     public function net(Request $request){
         switch ($request->get("filter")){
             case "day":
-                return response([1]);
+                $net_incomes = DailyNetIncome::query()
+                    ->get()->toArray();
+                return response($net_incomes);
                 break;
             case "month":
-                return response([2]);
+                $net_incomes = MonthlyNetIncome::query()
+                    ->selectRaw("DATE_FORMAT(date, '%Y-%m') month, COUNT(id) num")
+                    ->groupBy("month")
+                    ->get()->toArray();
+                return response($net_incomes);
                 break;
             case "year":
-                return response([3]);
+                $net_incomes = YearlyNetIncome::query()
+                    ->selectRaw("YEAR(date) year, COUNT(id) num")
+                    ->groupBy("year")
+                    ->get()->toArray();
+                return response($net_incomes);
                 break;
             default:return response([]);
                 break;

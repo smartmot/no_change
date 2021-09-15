@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Calendar;
 use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\InvoicePayment;
 use App\Models\Report\DailyExpense;
 use App\Models\Report\DailyIncome;
+use App\Models\Report\DailyNetIncome;
 use App\Models\Report\MonthlyExpense;
 use App\Models\Report\MonthlyIncome;
 use App\Models\Report\YearlyExpense;
@@ -40,11 +42,10 @@ class FrontendController extends Controller
     }
 
     public function test(Request $request){
-        $sales = MonthlyIncome::query()
-            ->selectRaw("COUNT(id) no, DATE_FORMAT(date, '%Y-%m') month")
-            ->groupBy("month")
-            ->get()->toArray();
-        dd($sales);
+        Calendar::firstOrCreate([
+            "date" => date("Y-m-d"),
+        ]);
+        dd();
         $staff = Staff::query()
             ->get()
             ->toArray();
