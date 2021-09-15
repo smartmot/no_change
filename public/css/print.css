@@ -1,0 +1,79 @@
+
+.print.a5{
+    width: 14.8cm;
+    height: 21cm;
+    margin: 0 auto;
+    background-color: white;
+}
+.print.a5 .margin{
+    width: 12.8cm;
+    height: 19cm;
+    padding: 1cm;
+}
+.color.pen{color: #3C54A5;}
+.color.red{color: red;}
+.print.a5 .mmiddle{
+    width: 5.8cm;
+    text-align: center;
+}
+.print.a5 .mleft,
+.print.a5 .mright
+{
+    width: 3.5cm;
+}
+.print.a5 .sec2:nth-child(2){
+    width: 3cm;
+}
+.print.a5 .sec2:first-child,
+.print.a5 .sec2:last-child{
+    width: 4.9cm;
+}
+.receipt{
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 12px;
+}
+.receipt thead td{
+    font-family: "Siemreap", sans-serif;
+    line-height: 16px;
+    text-align: center;
+}
+.receipt td, .tb05 th{
+    border: 1px solid #bab6b6;
+    padding: 3px 5px;
+}
+.receipt tbody td{
+    font-family: "Siemreap", sans-serif;
+}
+.receipt tbody td:first-child,
+.receipt thead td:first-child
+{
+    width: 20px;
+    text-align: center;
+}
+.receipt td:nth-child(3){width: 40px;}
+.receipt td:nth-child(4){width: 70px;}
+.receipt td:nth-child(5){width: 80px;}
+.receipt tbody td:nth-child(3){
+    text-align: center;
+}
+.receipt tbody td:nth-child(4),
+.receipt tbody td:nth-child(5){
+    text-align: right;
+}
+.receipt tfoot{
+    font-family: "Siemreap", sans-serif;
+}
+.receipt tfoot tr:first-child td:first-child{
+    border: none;
+    vertical-align: top;
+    padding: 0;
+}
+.receipt tfoot .foott{
+    border: none !important;
+    text-align: right;
+}
+.print.a5 .minifoot{
+    padding-bottom: 1cm;
+    padding-left: 1cm;
+}

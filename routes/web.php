@@ -71,6 +71,7 @@ Route::get('/photo/6x7.jpg', [Controllers\FileController::class,"svg6x7"])->name
 Route::get('/photo/profile.jpg', [Controllers\FileController::class,"svgprofile"])->name("svgprofile");
 
 Route::get('/a4', [Controllers\FileController::class,"a4jpg"])->name("a4");
+Route::get('/a5', [Controllers\FileController::class,"a5"])->name("a5");
 Route::get('/login', [Controllers\LoginController::class,"login"])->name("login");
 Route::post('/login', [Controllers\LoginController::class,"submit"])->name("login.submit");
 Route::post('/logout', [Controllers\LoginController::class,"logout"])->name("logout");

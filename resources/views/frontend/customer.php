@@ -18,6 +18,9 @@ require "inc/header.php"
 <div class="pt_20 pr_10 pl_10">
     <div id="customer">
         <div class="rowc">
+            <div class="wp_100 t_a_c" v-if="customers.length === 0">
+                <div class="fm-smreap">គ្មាន អតិថិជន</div>
+            </div>
             <div class="xl-2 lg-2p5 md-3 sm-6 fx_12" v-for="cust in customers">
                 <div class="pr_10 pl_10 pb_10">
                     <div class="pr_10 pl_10 pt_10 pb_10 bc_1 c_2">
@@ -59,20 +62,23 @@ require "inc/footer.php"
             params:[]
         },
         methods:{
-
-        },
-        mounted:function (){
-            let niiss=this;
-            setTimeout(function (){
+            load:function (){
+                let nis = this;
                 axios.get("<?php echo route("customer.index"); ?>", {
                     headers:$_i.headers,
-                    params:niiss.params
+                    params:nis.params
                 }).then(response=>{
-                    niiss.customers = response.data;
+                    nis.customers = response.data;
                 }).catch(function (err){
                     alert(err);
                 })
-            },500);
+            }
+        },
+        mounted:function (){
+            let nis=this;
+            $_c.watch("config",function (){
+                nis.load();
+            });
         }
     });
 </script>

@@ -1,6 +1,7 @@
 <script type="text/javascript">
     $_accept();
-
+    let menu = document.getElementsByClassName("hmenu")[0];
+    menu.getElementsByTagName("a")[2].classList.add("active");
     let stock = new Vue({
         el:".mainpg",
         data:{

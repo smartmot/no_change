@@ -23,4 +23,8 @@ class FileController extends Controller
     public function a4jpg(){
         return Response::view("a4")->header('Content-Type', "text/text");
     }
+
+    public function a5(){
+        return view("a5");
+    }
 }

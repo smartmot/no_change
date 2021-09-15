@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg">
+    <foreignObject x="10" y="10" width="595" height="842">
+        <style>
+            .c_1{color:red}
+        </style>
+        <body xmlns="http://www.w3.org/1999/xhtml">
+            <div class="c_1">A</div>
+        </body>
+    </foreignObject>
+    <!-- ... -->
+</svg>
