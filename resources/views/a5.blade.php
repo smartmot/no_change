@@ -175,7 +175,7 @@
 <script>
     setTimeout(function (){
         html2canvas(document.querySelector("#capture")).then(canvas => {
-            alert(canvas);
+            document.getElementById("miass").appendChild(canvas);
         });
     },1000);
 </script>
