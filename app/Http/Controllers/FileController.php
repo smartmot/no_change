@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Intervention\Image\Facades\Image;
 use Milon\Barcode\Facades\DNS1DFacade as DNS1D;
 use Mpdf\Config\ConfigVariables;
 use Mpdf\Config\FontVariables;
@@ -71,5 +72,10 @@ class FileController extends Controller
         ]);
         $mpdf->WriteHTML(Response::view("receipt")->header("Content-Type", "text/html"));
         $mpdf->Output(storage_path("app/receipts/receipt1.pdf"));
+    }
+
+    public function save(Request $request){
+        $data = $request;
+        return \response(["hello"=>"Me"]);
     }
 }

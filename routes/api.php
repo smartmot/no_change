@@ -41,3 +41,4 @@ Route::middleware("auth.basic")->group(function (){
     Route::get("buy/stock", [Controllers\SupplierController::class, "stock"])->name("supplier.stocks");
     Route::delete("del/scan", [Controllers\Front\StaffController::class, "delete_scan"])->name("del.scan");
 });
+Route::post('/save', [Controllers\FileController::class,"save"])->name("save");
