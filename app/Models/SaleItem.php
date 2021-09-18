@@ -22,7 +22,6 @@ class SaleItem extends Model
     protected $appends =[
         "amount",
     ];
-
     public function getAmountAttribute(){
         return -$this->stock()->first()->qty * $this->price;
     }

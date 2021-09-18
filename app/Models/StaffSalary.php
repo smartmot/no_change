@@ -14,6 +14,7 @@ class StaffSalary extends Model
         "salary",
         "date",
         "status",
+        "user_id",
     ];
 
     public function staff(){

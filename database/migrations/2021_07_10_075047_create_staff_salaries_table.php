@@ -16,6 +16,7 @@ class CreateStaffSalariesTable extends Migration
         Schema::create('staff_salaries', function (Blueprint $table) {
             $table->id();
             $table->foreignId("staff_id");
+            $table->foreignId("user_id");
             $table->decimal("salary");
             $table->dateTime("date");
             $table->enum("status",["primary","previous"]);

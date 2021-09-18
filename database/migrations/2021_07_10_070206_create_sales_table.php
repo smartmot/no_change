@@ -16,6 +16,7 @@ class CreateSalesTable extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->foreignId("customer_id")->nullable();
+            $table->foreignId("user_id");
             $table->string("date");
             $table->string("no");
             $table->enum("currency",["usd","riel","bath"]);

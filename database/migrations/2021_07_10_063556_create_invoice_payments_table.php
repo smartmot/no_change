@@ -16,6 +16,7 @@ class CreateInvoicePaymentsTable extends Migration
         Schema::create('invoice_payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId("invoice_id");
+            $table->foreignId("user_id");
             $table->decimal("paid");
             $table->dateTime("pay_date");
             $table->timestamps();

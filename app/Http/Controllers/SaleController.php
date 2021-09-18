@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminActivity;
 use App\Models\Calendar;
 use App\Models\Sale;
 use App\Models\SaleItem;
 use App\Models\SalePayment;
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -105,7 +107,8 @@ class SaleController extends Controller
             $sale = [
                 "customer_id" => ($data["customer_id"] ?? null),
                 "date" => date("Y-m-d"),
-                "no" => $year."-".str_pad($no, 3, '0', STR_PAD_LEFT),
+                "user_id" => Auth::id(),
+                "no" => $year."-".str_pad($no, 4, '0', STR_PAD_LEFT),
                 "currency" => $data["currency"],
                 "note" => $data["note"] ?? null,
                 "total" => $data["total"],
@@ -134,6 +137,7 @@ class SaleController extends Controller
 
             $payment = [
                 "sale_id" => $sale_id,
+                "user_id" => Auth::id(),
                 "paid" => $data["paid"],
                 "date" => date("Y-m-d"),
                 "due" => $data["total"] - $data["paid"],
@@ -147,7 +151,12 @@ class SaleController extends Controller
             $calendar = Calendar::firstOrCreate([
                 "date" => date("Y-m-d"),
             ]);
-
+            $log = new  AdminActivity([
+                "user_id" => Auth::id(),
+                "act"=>"បានលក់ឥវ៉ាន់ជូនអតិថិជន id: ".$data["customer_id"],
+                "reference" => $sale_id
+            ]);
+            $log->save();
             return response($resp);
         }
     }

@@ -12,5 +12,6 @@ class AdminActivity extends Model
     protected $fillable = [
         "user_id",
         "act",
+        "reference",
     ];
 }

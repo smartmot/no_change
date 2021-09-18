@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminActivity;
 use App\Models\Calendar;
 use App\Models\SalaryPayment;
 use App\Models\Staff;
@@ -73,6 +74,12 @@ class SalaryPaymentController extends Controller
             Calendar::firstOrCreate([
                 "date" => date("Y-m-d"),
             ]);
+            $log = new  AdminActivity([
+                "user_id" => Auth::id(),
+                "act"=>"[pid]បានបើកប្រាក់ខែអោយបុគ្គលិគ : ".$staff->name ." ចំនួន $".$data["salary"],
+                "reference" => $pay->id
+            ]);
+            $log->save();
             return response([
                 "error" => false,
                 "paid" => $pay->toArray()

@@ -15,6 +15,7 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("user_id");
             $table->string("name");
             $table->string("photo")->nullable();
             $table->enum("gender",["male","female"])->nullable();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminActivity;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\Supplier;
@@ -83,9 +84,17 @@ class SupplierController extends Controller
             $data = $validator->validate();
             $data["status"] = "active";
             $data["photo"] = $thumb;
+            $data["user_id"] = Auth::id();
 
             $supplier = new Supplier($data);
             $supplier->save();
+
+            $log = new  AdminActivity([
+                "user_id" => Auth::id(),
+                "act"=>"បានបន្ថែមអ្នកផ្គត់ផ្គង់ចូលក្នុងបញ្ជី - ".$data["name"],
+                "reference" => $supplier->id
+            ]);
+            $log->save();
             return response($respone);
         }
     }
@@ -131,6 +140,12 @@ class SupplierController extends Controller
                 "error" => false,
                 "data" => $supplier->toArray()
             ];
+            $log = new  AdminActivity([
+                "user_id" => Auth::id(),
+                "act"=>"បានកែប្រែពត៌មានអ្នកផ្គត់ផ្គង់ - ".$data["name"],
+                "reference" => $supplier->id
+            ]);
+            $log->save();
         }
         return response($resp);
     }
@@ -224,7 +239,14 @@ class SupplierController extends Controller
             $photo->save($photo->dirname."/".$photo->filename."_thumb.".$photo->extension);
             $thumb = $cover;
             $supplier->photo = $thumb;
+            $supplier->user_id = Auth::id();
             $supplier->save();
+            $log = new  AdminActivity([
+                "user_id" => Auth::id(),
+                "act"=>"បានធ្វើ់បច្ចុប្បន្នរូបភាពអ្នកផ្គត់ផ្គង់ : ".$supplier["name"],
+                "reference" => $supplier->id
+            ]);
+            $log->save();
             return response([
                 "error" => false,
             ]);

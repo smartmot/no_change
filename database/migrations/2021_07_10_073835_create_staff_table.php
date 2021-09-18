@@ -15,6 +15,7 @@ class CreateStaffTable extends Migration
     {
         Schema::create('staff', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("user_id");
             $table->string("name");
             $table->enum("gender",["male","female"]);
             $table->string("tel")->nullable();

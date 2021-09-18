@@ -12,6 +12,7 @@ class StaffDocument extends Model
     protected $fillable = [
         "staff_id",
         "url",
+        "user_id",
     ];
 
 }

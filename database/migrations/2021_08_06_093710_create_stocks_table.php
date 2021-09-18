@@ -16,6 +16,7 @@ class CreateStocksTable extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
             $table->foreignId("item_id");
+            $table->foreignId("user_id");
             $table->integer("qty");
             $table->enum("type",["sold","lost","stock_in","other"]);
             $table->string("note")->nullable();

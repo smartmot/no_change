@@ -11,7 +11,8 @@ class Scan extends Model
 
     protected $fillable = [
         "staff_id",
-        "time"
+        "time",
+        "user_id",
     ];
 
     public function staff(){

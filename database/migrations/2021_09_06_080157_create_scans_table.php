@@ -15,6 +15,7 @@ class CreateScansTable extends Migration
     {
         Schema::create('scans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("user_id");
             $table->foreignId("staff_id");
             $table->dateTime("time");
             $table->timestamps();

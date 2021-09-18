@@ -23,6 +23,7 @@ class Worker extends Model
         "code",
         "code_image",
         "status",
+        "user_id",
     ];
 
     public function scans(){

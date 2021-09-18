@@ -17,6 +17,7 @@ class CreateAdminActivitiesTable extends Migration
             $table->id();
             $table->foreignId("user_id");
             $table->string("act", 500);
+            $table->string("reference")->nullable();
             $table->timestamps();
         });
     }

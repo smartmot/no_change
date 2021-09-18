@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminActivity;
 use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class InvoiceItemController extends Controller
@@ -80,18 +82,26 @@ class InvoiceItemController extends Controller
         $validator = Validator::make($request->all(),[
             "name" => ["required", "max:255"]
         ]);
+
         if ($validator->fails()){
             $rps =[
                 "error" => true,
                 "errors" => $validator->errors()
             ];
         }else{
+            $log = new  AdminActivity([
+                "user_id" => Auth::id(),
+                "act"=>"បានកែឈ្មោះឥវ៉ាន់ : ".$invoiceItem->name ." ទៅ ".$request->get("name"),
+                "reference" => $invoiceItem->id
+            ]);
             $rps = [
                 "error" => false,
                 "data" => $validator->validate()
             ];
             $invoiceItem->update($rps["data"]);
             $invoiceItem->save();
+
+            $log->save();
         }
         return response($rps);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminActivity;
 use App\Models\Calendar;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
@@ -114,16 +115,24 @@ class InvoiceController extends Controller
             "name" => $data["name"],
             "date" => $data["date"],
             "time" => $data["time"],
+            "user_id" => Auth::id(),
         ];
         $invoice = new Invoice($invd);
         $invoice->save();
         $invoice_id = $invoice->id;
         $payment = new InvoicePayment([
             "invoice_id" => $invoice_id,
+            "user_id" => Auth::id(),
             "paid" => $data["paid"],
             "pay_date" => $data["pay_date"],
         ]);
         $payment->save();
+        $log = new  AdminActivity([
+            "user_id" => Auth::id(),
+            "act"=>"បានបញ្ចូលវិក័យប័ត្រ លេខ : ".$invd["no"],
+            "reference" => $invoice_id
+        ]);
+        $log->save();
         foreach ($items as $key=>$item){
             $code = $data["no"] . "-0".($key+1);
             $barcode = date("Y/m/d/").$code.".svg";
@@ -154,6 +163,7 @@ class InvoiceController extends Controller
         Calendar::firstOrCreate([
             "date" => date("Y-m-d"),
         ]);
+
         return response([
             "error" => false,
         ]);
@@ -193,7 +203,14 @@ class InvoiceController extends Controller
                 "error" => false,
             ];
             $invoice->update($validator->validate());
+            $invoice->user_id = Auth::id();
             $invoice->save();
+            $log = new  AdminActivity([
+                "user_id" => Auth::id(),
+                "act"=>"បានកែឈ្មោះវិក័យប័ត្រ លេខ : ".$invoice["no"],
+                "reference" => $invoice->id
+            ]);
+            $log->save();
         }
         return response($res);
     }

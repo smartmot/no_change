@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminActivity;
 use App\Models\InvoiceItem;
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -107,12 +109,19 @@ class StockController extends Controller
                             "type"=>"lost",
                             "note" => $qty > 0 ? "លើស" : "បាត់ (រាប់ខ្វះ)",
                             "date"=>$data["date"],
+                            "user_id" => Auth::id()
                         ]);
                         $stock->save();
                         $resp = [
                             "error" => false,
                             "data" => $stock
                         ];
+                        $log = new  AdminActivity([
+                            "user_id" => Auth::id(),
+                            "act"=>"បានរាប់ស្តុកឥវ៉ាន់ ".$data["item_id"] ." : ". $qty,
+                            "reference" => $data["item_id"]
+                        ]);
+                        $log->save();
                     }
                     break;
             }

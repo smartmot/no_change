@@ -14,5 +14,6 @@ class SalePayment extends Model
         "paid",
         "date",
         "due",
+        "user_id",
     ];
 }

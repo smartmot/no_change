@@ -18,20 +18,8 @@
         }
         .color.pen{color: #3C54A5;}
         .color.red{color: red;}
-        .print.a5 .mmiddle{
-            width: 5.8cm;
-            text-align: center;
-        }
-        .print.a5 .mleft
-        {
-            width: 3.5cm;
-        }
-        .mleft{
-
-        }
-        .mmiddle{
-
-        }
+        .print.a5 .mmiddle{width: 5.8cm;text-align: center;}
+        .print.a5 .mleft {width: 3.5cm;}
         .mright1{width: 1.3cm;text-align: right;}
         .mright2{width: 2.2cm}
         .print.a5 .sec2:nth-child(2){
@@ -41,69 +29,30 @@
         .print.a5 .sec2:last-child{
             width: 4.9cm;
         }
-        .receipt{
-            border-collapse: collapse;
-            width: 100%;
-            font-size: 12px;
-        }
-        .receipt thead td{
+        .rc{border-collapse: collapse;width: 100%;font-size: 12px;}
+        .rc thead td{
             font-family: "khmerossiemreap",Siemreap, sans-serif;
             line-height: 16px;
             text-align: center;
         }
-        .receipt td, .tb05 th{
+        .rc td, .tb05 th{
             border: 1px solid #bab6b6;
             padding: 3px 5px;
         }
-        .receipt tbody td{
+        .rc tbody td{
             font-family: "khmerossiemreap",Siemreap, sans-serif;
         }
-        .receipt tbody td.no, .receipt thead td.no{
-            width: 20px;
-            text-align: center;
-        }
-        .receipt td:nth-child(3){width: 40px;}
-        .receipt td:nth-child(4){width: 70px;}
-        .receipt td:nth-child(5){width: 80px;}
-        .receipt tbody td:nth-child(3){
-            text-align: center;
-        }
-        .receipt tbody td:nth-child(4),
-        .receipt tbody td:nth-child(5){
-            text-align: right;
-        }
-        .receipt tfoot{
-            font-family: "khmerossiemreap",Siemreap, sans-serif;
-        }
-        .receipt tfoot tr:first-child td:first-child{
-            border: none !important;
-            vertical-align: top;
-            padding: 0;
-        }
-        .receipt tfoot .foott{
-            border: none !important;
-            text-align: right;
-        }
-        .print.a5 .minifoot{
-            padding-bottom: 1cm;
-            padding-left: 1cm;
-        }
+        .rc td.no{width: 30px !important;text-align: center;}
+        .rc td.q{width: 60px;}
+        .rc td.p{width: 80px;}
+        .rc tbody td.p{text-align: right}
+        .rc td.a{width: 90px;}
+        .rc tbody td.a{text-align: right}
+        .rc tfoot{font-family: "khmerossiemreap",Siemreap, sans-serif;}
+        .rc tfoot .foott{border: none !important;text-align: right;}
         .p-r{position: relative;}
-        .p-a{position: absolute;}
-        .t-0{top: 0}.r-0{right: 0}.b-0{bottom: 0}.l-0{left: 0}
-        .t_a_c{text-align: center;}
-        .t_a_l{text-align: left;}
-        .t_a_r{text-align: right;}
         .fs_24{font-size: 24px;}
-        .fs_20{font-size: 20px;}
-        .fs_18{font-size: 18px;}
-        .fs_12{font-size: 12px;}
         .fw_b{font-weight: bold}
-        .ds_f{display: flex;display: -moz-flex; display: -webkit-flex; display: -ms-flex;}
-        .lh_15{line-height: 15px;}
-        .lh_18{line-height: 18px;}
-        .lh_20{line-height: 20px;}
-        .pl_20{padding-left: 20px;}
         .fm-popp{font-family: "khmerossiemreap",Siemreap, sans-serif}
         .fm-ubt5{font-family: "khmerossiemreap", Siemreap,sans-serif}
         .fm-smreap{font-family: "khmerossiemreap",Siemreap, sans-serif}
@@ -111,20 +60,13 @@
         .fm-bokor{font-family:"khmerosbokor", Bokor,sans-serif}
         .pt_3{padding-top: 3px;}
         .pt_5{padding-top: 5px;}
-        .pt_10{padding-top: 10px;}
-        .w_30{width: 30px;}
-        .w_40{width: 40px;}
-        .w_45{width: 45px;}
-        .wp_100{width: 100%}
-        .pr_8{padding-right: 8px;}
-        .fx_4{-ms-flex:0 0 33.333333%;flex:0 0 33.333333%;max-width:33.333333%}
-        .f_row{flex-flow: row wrap}
-        .f_col{flex-flow: column}
         .no_bor,.t2{
             border: none;
             border-collapse: collapse;
             font-family: "khmerossiemreap", Siemreap, sans-serif;
         }
+        .t3{border: none;border-collapse: collapse;}
+        .t3 td{border: none;padding: 0;}
         .no_bor td{
             font-family:"khmerosbokor",Bokor, sans-serif;
         }
@@ -133,40 +75,41 @@
         .d1{width: 1.6cm;}
         .d2{width: 0.12cm;}
         .d3{width: 3.18cm;}
-        .d4{width: 3cm;color: #3C54A5; line-height: 25px; font-size: 17px;}
-        .d5{width: 1.8cm;text-align: right;}
-        .d6{width: 0.13cm}
-        .d7{width: 2.97cm;text-align: right;}
+        .d4{width: 3cm;color: #3C54A5; line-height: 25px; font-size: 17px;vertical-align: top}
+        .d5{width: 0.6cm;}
+        .d6{width: 1cm;padding-top: 4px;}
+        .d7{width: 3.3cm;text-align: left;}
         .s1{height: 18px;line-height: 18px;font-family: khmerosbokor,sans-serif;color:red;font-size: 18px;}
         .s1 u{display: inline-block;font-size: 16px;font-family: khmerossiemreap,Siemreap,sans-serif}
-        .d5,.d6,.d7{vertical-align: bottom !important;}
+        .d5,.d6,.d7{vertical-align: top !important;}
         .b5{padding-bottom: 5px;}
         .c1{width: 4.9cm;}
-        .c2{width: 3cm;}
-        .c3{width: 1.3cm}
-        .c4{width: 0.6cm;}
-        .c5{font-size: 20px; color: red;font-weight: bold;width: 2.7cm;text-align: right;font-family: sans-serif}
+        .c2{width: 3cm;vertical-align: middle;text-align: center !important;}
+        .c3{width: 1.6cm}
+        .c4{width: 0.6cm;vertical-align: middle;padding-top: 1px;}
+        .c5{font-size: 18px; color: red;font-weight: bold;width: 2.7cm;text-align: right;font-family: khmerossiemreap, sans-serif;vertical-align: middle}
+        .rc .nb{border: none;padding: 0;vertical-align: top;padding-top: 5px;}
     </style>
 </head>
 <body id="capture" style="background-color: gainsboro">
 <div class="print a5">
     <div class="margin p-r">
-        <table>
+        <table class="t3">
             <tbody>
             <tr>
                 <td class="c1"></td>
                 <td class="c2">
-                    <div class="fm-moul t_a_c">
+                    <div class="fm-moul tc">
                         <div class="fs_24 color pen">លី ថៃ</div>
                     </div>
                 </td>
                 <td class="c3"></td>
                 <td class="c4">
                     <div>
-                        <img width="20" src="{{ asset("no.svg") }}" alt="">
+                        <img width="20" src="https://bkworld.asia/public/pos/public/no.svg" alt="">
                     </div>
                 </td>
-                <td class="c5">2021-0001</td>
+                <td class="c5">{{ $receipt["no"] }}</td>
             </tr>
             </tbody>
         </table>
@@ -176,9 +119,9 @@
                 <tr>
                     <td class="mleft">
                         <div>
-                            <div>ផ្ទះលេខ 75-79</div>
-                            <div>សង្កាត់ទួលស្វាយព្រៃ២ </div>
-                            <div>ខណ្ឌចំការមន ភ្នំពេញ</div>
+                            @for($ind = 0; $ind < count($add = explode(",",config("pos.address"))); $ind++)
+                                <div>{{$add[$ind]}}</div>
+                            @endfor
                         </div>
                     </td>
                     <td class="mmiddle">
@@ -188,9 +131,9 @@
                     </td>
                     <td class="mright1">TEL :</td>
                     <td class="mright2">
-                        <div>010 563 093</div>
-                        <div>092 235 043</div>
-                        <div>096 235 0431</div>
+                        @for($ind = 0; $ind < count($tel = explode("/",config("pos.tel"))); $ind++)
+                            <div>{{$tel[$ind]}}</div>
+                        @endfor
                     </td>
                 </tr>
                 </tbody>
@@ -211,9 +154,9 @@
                     <div>:</div>
                 </td>
                 <td class="d3 t">
-                    <div>លី ឯល</div>
-                    <div>010 563 093</div>
-                    <div>09/18/2021</div>
+                    <div>{{ isset($receipt["customer"]["name"]) ? $receipt["customer"]["name"] : "​" }}</div>
+                    <div>{{ isset($receipt["customer"]["tel"]) ? $receipt["customer"]["tel"] : "​" }}</div>
+                    <div>{{ date_format(date_create($receipt["date"]), "d/d/Y") }}</div>
                 </td>
                 <td class="tc d4">
                     <div class="fm-moul pt_3">វិក័យប័ត្រ</div>
@@ -223,36 +166,39 @@
 
                 </td>
                 <td class="d6 t">
-
+                    <div>
+                        <img width="29" src="https://bkworld.asia/public/pos/public/aba_icon.png" alt="">
+                    </div>
                 </td>
                 <td class="d7 t">
-
+                    <div>{{config("pos.aba_usd")}} (ដុល្លា)</div>
+                    <div>{{ config("pos.aba_riel") }} (រៀល)</div>
                 </td>
             </tr>
             </tbody>
         </table>
 
         <div class="pt_5">
-            <table class="receipt">
+            <table class="rc">
                 <thead>
                 <tr>
                     <td class="no">
                         <div>ល.រ</div>
                         <div>N<sup><u>o</u></sup></div>
                     </td>
-                    <td>
+                    <td class="n">
                         <div>ឈ្មោះទំនិញ</div>
                         <div>Description</div>
                     </td>
-                    <td>
+                    <td class="q">
                         <div>ចំនួន</div>
                         <div>Quantity</div>
                     </td>
-                    <td>
+                    <td class="p">
                         <div>តម្លៃរាយ</div>
                         <div>Unit Price</div>
                     </td>
-                    <td>
+                    <td class="a">
                         <div>តម្លៃសរុប</div>
                         <div>Amount</div>
                     </td>
@@ -260,81 +206,44 @@
                 </thead>
 
                 <tbody>
-                <tr>
-                    <td class="no">1</td>
-                    <td>អាវកាក់</td>
-                    <td>200</td>
-                    <td>$50,000.00</td>
-                    <td>$20,000,00.00</td>
-                </tr>
-                <tr>
-                    <td class="no">1</td>
-                    <td>អាវកាក់</td>
-                    <td>3</td>
-                    <td>$50,000.00</td>
-                    <td>$20,000,00.00</td>
-                </tr>
-                <tr>
-                    <td class="no">1</td>
-                    <td>អាវកាក់</td>
-                    <td>5</td>
-                    <td>$50,000.00</td>
-                    <td>$20,000,00.00</td>
-                </tr>
-                <tr>
-                    <td class="no">1</td>
-                    <td>អាវកាក់</td>
-                    <td>7</td>
-                    <td>$50,000.00</td>
-                    <td>$20,000,00.00</td>
-                </tr>
+                @foreach($receipt["items"] as $key=> $item)
+                    <tr>
+                        <td class="no">{{$key+1}}</td>
+                        <td class="n">{{ $item["stock"]["product"]["name"] }}</td>
+                        <td class="q">{{ $item["stock"]["qty"] * -1 }}</td>
+                        <td class="p">{{ $money($item["price"], $receipt["currency"]) }}</td>
+                        <td class="a">{{ $money($item["price"] * $item["stock"]["qty"] * -1, $receipt["currency"]) }}</td>
+                    </tr>
+                @endforeach
                 </tbody>
 
                 <tfoot>
                 <tr>
-                    <td colspan="3" rowspan="3">
-                        <div class="ds_f lh_15 pt_10">
-                            <div class="fx_4">
-                                <div>អតិថិជន</div>
-                                <div>Customer</div>
-                            </div>
-                            <div class="fx_4">
-                                <div>អ្នគិតលុយ</div>
-                                <div>Cashier</div>
-                            </div>
-                            <div class="fx_4">
-                                <div>អ្នកលក់</div>
-                                <div>Seller</div>
-                            </div>
+                    <td class="nb" colspan="3" rowspan="3">
+                        <div>
+                            <span>អតិថិជន</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>អ្នគិតលុយ</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>អ្នកលក់</span>
+                        </div>
+                        <div>
+                            <span>Customer</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>Cashier</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>Seller</span>
                         </div>
                     </td>
                     <td class="foott">សរុប/Total</td>
-                    <td></td>
+                    <td style="text-align: right; font-weight: bold">{{ $money($receipt["total"], $receipt["currency"]) }}</td>
                 </tr>
                 <tr>
                     <td class="foott">ទូទាត់/Paid</td>
-                    <td></td>
+                    <td style="text-align: right">{{ $money($receipt["paid"], $receipt["currency"]) }}</td>
                 </tr>
                 <tr>
                     <td class="foott">នៅខ្វះ/Due</td>
-                    <td></td>
+                    <td style="text-align: right">{{ $money($receipt["due"], $receipt["currency"]) }}</td>
                 </tr>
                 </tfoot>
             </table>
-        </div>
-
-        <div class="p-a b-0 l-0 fm-smreap minifoot fs_12">
-            <div class="ds_f">
-                <div class="w_40">
-                    <div class="pr_8 pt_3">
-                        <img class="wp_100" src="https://bkworld.asia/public/pos/public/aba_icon.png" alt="">
-                    </div>
-                </div>
-                <div class="lh_20">
-                    <div>001 300 480 (លុយដុល្លា $)</div>
-                    <div>001 760 147 (លុយរៀល ៛)</div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

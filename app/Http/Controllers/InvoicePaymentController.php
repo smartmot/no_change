@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminActivity;
 use App\Models\Invoice;
 use App\Models\InvoicePayment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class InvoicePaymentController extends Controller
@@ -39,7 +41,7 @@ class InvoicePaymentController extends Controller
             ];
         }else{
             $data = $validator->validate();
-            $invoice = Invoice::query()->where("id", $data["invoice_id"])->first();
+            $invoice = Invoice::query()->where("id", $data["invoice_id"])>with("supplier")->first();
             if ($data["paid"] > $invoice->due){
                 $resp = [
                     "error" => true,
@@ -50,12 +52,19 @@ class InvoicePaymentController extends Controller
                     ]
                 ];
             }else{
+                $data["user_id"] = Auth::id();
                 $payment = new InvoicePayment($data);
                 $payment->save();
                 $resp = [
                     "error" => false,
                     "invoice" => $invoice->toArray()
                 ];
+                $log = new  AdminActivity([
+                    "user_id" => Auth::id(),
+                    "act"=>"បានទូទាត់វិក័យប័ត្រអ្នកផ្គត់ផ្គង់ : ".$invoice->supplier->name ." ចំនួន ".$invoice->currency.$data["paid"],
+                    "reference" => $invoice->id
+                ]);
+                $log->save();
             }
         }
         return response($resp);

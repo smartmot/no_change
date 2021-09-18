@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminActivity;
 use App\Models\Staff;
 use App\Models\StaffSalary;
 use App\Models\Worker;
@@ -97,6 +98,12 @@ class StaffController extends Controller
                 "status" => "primary",
             ]);
             $salary->save();
+            $log = new  AdminActivity([
+                "user_id" => Auth::id(),
+                "act"=>"បានបញ្ចូលបុគ្គលិគ : ".$staff["name"] ." ចូលក្នុងបញ្ចី",
+                "reference" => $staff->id
+            ]);
+            $log->save();
             return response([
                 "error" => false
             ]);
@@ -152,7 +159,12 @@ class StaffController extends Controller
                 "start_date" => $data["start_date"],
             ]);
             $staff->save();
-
+            $log1 = new  AdminActivity([
+                "user_id" => Auth::id(),
+                "act"=>"បានកែប្រែពត៌មានបុគ្គលិគ : ".$staff["name"],
+                "reference" => $staff->id
+            ]);
+            $log1->save();
             if ($staff->pre_salary != $data["salary"]){
                 StaffSalary::query()
                     ->where("staff_id", "=", $staff->id)
@@ -167,6 +179,12 @@ class StaffController extends Controller
                     "status" => "primary",
                 ]);
                 $salary->save();
+                $log = new  AdminActivity([
+                    "user_id" => Auth::id(),
+                    "act"=>"បានធ្វើ់បច្ចុប្បន្នប្រាក់ខែបុគ្គលិគ : ".$staff["name"],
+                    "reference" => $staff->id
+                ]);
+                $log->save();
             }
 
             return response([
@@ -197,7 +215,14 @@ class StaffController extends Controller
             $photo->save($photo->dirname."/".$photo->filename."_thumb.".$photo->extension);
             $thumb = $cover;
             $staff->photo = $thumb;
+            $staff->user_id = Auth::id();
             $staff->save();
+            $log = new  AdminActivity([
+                "user_id" => Auth::id(),
+                "act"=>"បានធ្វើ់បច្ចុប្បន្នរូបភាពបុគ្គលិគ : ".$staff["name"],
+                "reference" => $staff->id
+            ]);
+            $log->save();
             return response([
                 "error" => false,
             ]);

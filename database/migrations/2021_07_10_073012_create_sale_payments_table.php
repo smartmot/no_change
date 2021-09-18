@@ -16,6 +16,7 @@ class CreateSalePaymentsTable extends Migration
         Schema::create('sale_payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId("sale_id");
+            $table->foreignId("user_id");
             $table->decimal("paid");
             $table->date("date");
             $table->decimal("due");

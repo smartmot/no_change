@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
+use App\Models\Receipt\Receipt;
+use App\Models\Sale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Intervention\Image\Facades\Image;
@@ -29,7 +32,30 @@ class FileController extends Controller
     }
 
     public function a5(){
-        return view("receipt");
+        $sale = Receipt::query()
+            ->where("id", "=", 1)
+            ->with("customer")
+            ->with("items")
+            ->first();
+        return view("receipt")->with([
+            "receipt" => $sale->toArray(),
+            "money" => function($money,$currency){
+                switch ($currency){
+                    case "riel":
+                        return "៛". number_format($money, 0, "", ",");
+                        break;
+                    case "usd":
+                        return "$".number_format($money, 2, ".", ",");
+                        break;
+                    case "bath":
+                        return "&#3647;". number_format($money, 0, "", ",");
+                        break;
+                    default:
+                        return "$".$money;
+                        break;
+                }
+            }
+        ]);
     }
 
     public function pdf(){
@@ -63,7 +89,31 @@ class FileController extends Controller
             'margin_bottom' => 0,
             "orientation" => "P"
         ]);
-        $mpdf->WriteHTML(Response::view("receipt")->header("Content-Type", "text/html"));
+        $sale = Receipt::query()
+            ->where("id", "=", 1)
+            ->with("customer")
+            ->with("items")
+            ->first();
+        $mpdf->WriteHTML(Response::view("receipt",[
+            "receipt" => $sale->toArray(),
+            "money" => function($money,$currency){
+                switch ($currency){
+                    case "riel":
+                        return "៛". number_format($money, 0, "", ",");
+                        break;
+                    case "usd":
+                        return "$".number_format($money, 2, ".", ",");
+                        break;
+                    case "bath":
+                        return "&#3647;". number_format($money, 0, "", ",");
+                        break;
+                    default:
+                        return "$".$money;
+                        break;
+                }
+            }
+
+        ])->header("Content-Type", "text/html"));
         $mpdf->Output(storage_path("app/receipts/receipt1.pdf"));
     }
 

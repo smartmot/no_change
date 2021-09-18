@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminActivity;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -65,6 +66,7 @@ class CustomerController extends Controller
             }else{
                 $cus["photo"] = null;
             }
+            $cus["user_id"] = Auth::id();
             $customer = new Customer($cus);
             $customer->save();
             $cus["id"] = $customer->id;
@@ -72,6 +74,12 @@ class CustomerController extends Controller
                 "error" => false,
                 "customer" => $cus
             ];
+            $log = new  AdminActivity([
+                "user_id" => Auth::id(),
+                "act"=>"បានបញ្ចូលអតិថិជនថ្មី : ".$cus["name"],
+                "reference" => $cus["id"]
+            ]);
+            $log->save();
         }
         return response($resp);
     }
@@ -110,8 +118,15 @@ class CustomerController extends Controller
             ]);
         }else{
             $data = $validator->validate();
+            $data["user_id"] = Auth::id();
             $customer->update($data);
             $customer->save();
+            $log = new  AdminActivity([
+                "user_id" => Auth::id(),
+                "act"=>"បានធ្វើបច្ចុប្បន្នភាពអតិថិជន : ".$customer->name,
+                "reference" => $customer->id
+            ]);
+            $log->save();
             return response([
                 "error" => false,
                 "data"=> $data
@@ -141,7 +156,14 @@ class CustomerController extends Controller
             $photo->save($photo->dirname."/".$photo->filename."_thumb.".$photo->extension);
             $thumb = $cover;
             $customer->photo = $thumb;
+            $customer->user_id = Auth::id();
             $customer->save();
+            $log = new  AdminActivity([
+                "user_id" => Auth::id(),
+                "act"=>"បានធ្វើបច្ចុប្បន្នភាពរូបភាពអតិថិជន : ".$customer->name,
+                "reference" => $customer->id
+            ]);
+            $log->save();
             return response([
                 "error" => false,
             ]);
