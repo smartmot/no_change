@@ -5,13 +5,6 @@
     <title></title>
     <style>
         /* khmer */
-        @font-face {
-            font-family: 'Siemreap';
-            font-style: normal;
-            font-weight: 400;
-            src: url(https://fonts.gstatic.com/s/siemreap/v15/Gg82N5oFbgLvHAfNl1YXlg4.woff2) format('woff2');
-            unicode-range: U+1780-17FF, U+200C, U+25CC, U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-        }
         .print.a5{
             width: 14.8cm;
             height: 21cm;
@@ -29,11 +22,18 @@
             width: 5.8cm;
             text-align: center;
         }
-        .print.a5 .mleft,
-        .print.a5 .mright
+        .print.a5 .mleft
         {
             width: 3.5cm;
         }
+        .mleft{
+
+        }
+        .mmiddle{
+
+        }
+        .mright1{width: 1.3cm;text-align: right;}
+        .mright2{width: 2.2cm}
         .print.a5 .sec2:nth-child(2){
             width: 3cm;
         }
@@ -47,7 +47,7 @@
             font-size: 12px;
         }
         .receipt thead td{
-            font-family: "Siemreap","KhmerOS", sans-serif;
+            font-family: "khmerossiemreap",Siemreap, sans-serif;
             line-height: 16px;
             text-align: center;
         }
@@ -56,7 +56,7 @@
             padding: 3px 5px;
         }
         .receipt tbody td{
-            font-family: "Siemreap","KhmerOS", sans-serif;
+            font-family: "khmerossiemreap",Siemreap, sans-serif;
         }
         .receipt tbody td.no, .receipt thead td.no{
             width: 20px;
@@ -73,7 +73,7 @@
             text-align: right;
         }
         .receipt tfoot{
-            font-family: "Siemreap","KhmerOS", sans-serif;
+            font-family: "khmerossiemreap",Siemreap, sans-serif;
         }
         .receipt tfoot tr:first-child td:first-child{
             border: none !important;
@@ -104,11 +104,11 @@
         .lh_18{line-height: 18px;}
         .lh_20{line-height: 20px;}
         .pl_20{padding-left: 20px;}
-        .fm-popp{}
-        .fm-bokor{font-family: "Siemreap", sans-serif}
-        .fm-ubt5{}
-        .fm-smreap{}
-        .fm-moul{}
+        .fm-popp{font-family: "khmerossiemreap",Siemreap, sans-serif}
+        .fm-ubt5{font-family: "khmerossiemreap", Siemreap,sans-serif}
+        .fm-smreap{font-family: "khmerossiemreap",Siemreap, sans-serif}
+        .fm-moul{font-family: "moul","khmerossiemreap", sans-serif}
+        .fm-bokor{font-family:"khmerosbokor", Bokor,sans-serif}
         .pt_3{padding-top: 3px;}
         .pt_5{padding-top: 5px;}
         .pt_10{padding-top: 10px;}
@@ -120,66 +120,118 @@
         .fx_4{-ms-flex:0 0 33.333333%;flex:0 0 33.333333%;max-width:33.333333%}
         .f_row{flex-flow: row wrap}
         .f_col{flex-flow: column}
+        .no_bor,.t2{
+            border: none;
+            border-collapse: collapse;
+            font-family: "khmerossiemreap", Siemreap, sans-serif;
+        }
+        .no_bor td{
+            font-family:"khmerosbokor",Bokor, sans-serif;
+        }
+        .no_bor td,.t2 td.t{font-size: 12px;line-height: 18px;vertical-align: top;color: #3C54A5;border: none;}
+        .tc{text-align: center}
+        .d1{width: 1.6cm;}
+        .d2{width: 0.12cm;}
+        .d3{width: 3.18cm;}
+        .d4{width: 3cm;color: #3C54A5; line-height: 25px; font-size: 17px;}
+        .d5{width: 1.8cm;text-align: right;}
+        .d6{width: 0.13cm}
+        .d7{width: 2.97cm;text-align: right;}
+        .s1{height: 18px;line-height: 18px;font-family: khmerosbokor,sans-serif;color:red;font-size: 18px;}
+        .s1 u{display: inline-block;font-size: 16px;font-family: khmerossiemreap,Siemreap,sans-serif}
+        .d5,.d6,.d7{vertical-align: bottom !important;}
+        .b5{padding-bottom: 5px;}
+        .c1{width: 4.9cm;}
+        .c2{width: 3cm;}
+        .c3{width: 1.3cm}
+        .c4{width: 0.6cm;}
+        .c5{font-size: 20px; color: red;font-weight: bold;width: 2.7cm;text-align: right;font-family: sans-serif}
     </style>
 </head>
 <body id="capture" style="background-color: gainsboro">
 <div class="print a5">
     <div class="margin p-r">
-        <div class="fm-moul t_a_c">
-            <div class="fs_24 color pen">លី ថៃ</div>
-        </div>
-        <div class="ds_f color pen f_row">
-            <div class="mleft f_col">
-                <div class="fm-bokor fs_12 lh_18">
-                    <div>ផ្ទះលេខ 75-79</div>
-                    <div>សង្កាត់ទួលស្វាយព្រៃ២ </div>
-                    <div>ខណ្ណចំការមន ភ្នំពេញ</div>
-                </div>
-            </div>
-            <div class="mmiddle">
-                <div class="fm-bokor fs_12 lh_18">
-                    <div>លក់បោះដុំ ខោទ្រនាប់ អាវទ្រនាប់ ឈុតកីឡា កន្សែង</div>
-                    <div>សារុង អាវសិស្សសាលា ស្រោមដៃ ស្រោមជើង</div>
-                    <div>និងសម្លៀកបំពាក់ពីទារកដល់មនុស្សចាស់គ្រប់ប្រភេទ</div>
-                </div>
-            </div>
-            <div class="mright fs_12">
-                <div class="pl_20 fm-popp">
-                    <div class="ds_f">
-                        <div class="w_30">TEL :</div>
+        <table>
+            <tbody>
+            <tr>
+                <td class="c1"></td>
+                <td class="c2">
+                    <div class="fm-moul t_a_c">
+                        <div class="fs_24 color pen">លី ថៃ</div>
+                    </div>
+                </td>
+                <td class="c3"></td>
+                <td class="c4">
+                    <div>
+                        <img width="20" src="{{ asset("no.svg") }}" alt="">
+                    </div>
+                </td>
+                <td class="c5">2021-0001</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="color pen main_header p-r b5">
+            <table class="no_bor">
+                <tbody>
+                <tr>
+                    <td class="mleft">
                         <div>
-                            <div>010 563 093</div>
-                            <div>092 235 043</div>
-                            <div>096 235 0431</div>
+                            <div>ផ្ទះលេខ 75-79</div>
+                            <div>សង្កាត់ទួលស្វាយព្រៃ២ </div>
+                            <div>ខណ្ឌចំការមន ភ្នំពេញ</div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </td>
+                    <td class="mmiddle">
+                        <div>លក់បោះដុំ ខោទ្រនាប់ អាវទ្រនាប់ ឈុតកីឡា កន្សែង</div>
+                        <div>សារុង អាវសិស្សសាលា ស្រោមដៃ ស្រោមជើង</div>
+                        <div>និងសម្លៀកបំពាក់ពីទារកដល់មនុស្សចាស់គ្រប់ប្រភេទ</div>
+                    </td>
+                    <td class="mright1">TEL :</td>
+                    <td class="mright2">
+                        <div>010 563 093</div>
+                        <div>092 235 043</div>
+                        <div>096 235 0431</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="ds_f pt_5">
-            <div class="sec2 fm-smreap fs_12 p-r color pen">
-                <div class="p-a b-0 l-0">
-                    <div class="ds_f">
-                        <div class="w_45">អតិថិជន</div>
-                        <div>: លី ឯល</div>
-                    </div>
-                    <div class="ds_f">
-                        <div class="w_45">TEL</div>
-                        <div>: 010 563 093</div>
-                    </div>
-                </div>
-            </div>
-            <div class="sec2 t_a_c lh_20 color pen">
-                <div class="fm-moul pt_3">វិក័យប័ត្រ</div>
-                <div class="fm-ubt5">INVOICE</div>
-            </div>
-            <div class="sec2 p-r">
-                <div class="t_a_r p-a b-0 r-0 color red">
-                    <span class="fw_b fs_20">N<sup><u>o</u></sup> : </span>
-                    <span class="fs_18 fw_b">2021-001</span>
-                </div>
-            </div>
-        </div>
+
+        <table class="t2">
+            <tbody>
+            <tr>
+                <td class="d1 t">
+                    <div>អតិថិជន</div>
+                    <div>TEL</div>
+                    <div>កាលបរិច្ឆេទ</div>
+                </td>
+                <td class="d2 t">
+                    <div>:</div>
+                    <div>:</div>
+                    <div>:</div>
+                </td>
+                <td class="d3 t">
+                    <div>លី ឯល</div>
+                    <div>010 563 093</div>
+                    <div>09/18/2021</div>
+                </td>
+                <td class="tc d4">
+                    <div class="fm-moul pt_3">វិក័យប័ត្រ</div>
+                    <div class="fm-smreap fw_b">INVOICE</div>
+                </td>
+                <td class="d5 t">
+
+                </td>
+                <td class="d6 t">
+
+                </td>
+                <td class="d7 t">
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
         <div class="pt_5">
             <table class="receipt">
                 <thead>
@@ -275,7 +327,7 @@
             <div class="ds_f">
                 <div class="w_40">
                     <div class="pr_8 pt_3">
-                        <img class="wp_100" src="" alt="">
+                        <img class="wp_100" src="https://bkworld.asia/public/pos/public/aba_icon.png" alt="">
                     </div>
                 </div>
                 <div class="lh_20">

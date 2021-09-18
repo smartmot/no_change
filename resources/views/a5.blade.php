@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ asset("css/print.css") }}" type="text/css">
     <script type="text/javascript" src="{{ asset("js/app.js") }}"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/gildas-lormeau/zip.js/dist/zip-full.min.js"></script>
+
     <style>
         .ds_f{display: flex;}.t_a_r{text-align: right}.t_a_c{text-align: center}.t_a_l{text-align: left}
         .fm-moul{font-family: Moul, sans-serif;}
@@ -28,6 +29,7 @@
         .fx_4{-ms-flex:0 0 33.333333%;flex:0 0 33.333333%;max-width:33.333333%}
         .pr_8{padding-right: 8px;}
     </style>
+
 </head>
 <body style="background-color: gainsboro">
 <div class="print a5">
@@ -250,6 +252,8 @@
 <img src="" class="p-a l-0 t-0" alt="IMG" id="imger">
 <button id="getme" class="p-a t-0 r-0">Get Image</button>
 <script>
+    import jsPDF from "jspdf";
+
     JSPM.JSPrintManager.auto_reconnect = true;
     JSPM.JSPrintManager.start();
     var node = document.getElementById("print");
@@ -266,19 +270,17 @@
     JSPM.JSPrintManager.WS.onStatusChanged = function () {
 
     };
+
     $("#getme").click(function (){
         htmlToImage.toSvg(node,{ quality: 1 })
             .then(function (dataUrl) {
                 $("#imger").attr("src", dataUrl);
-                axios.post("{{route("save")}}",null,{
-                    params:{
-                        save:dataUrl,
-                    }
-                }).then(function (dataz){
-                    alert(JSON.stringify(dataz));
-                }).catch(function (err){
-                    alert(err)
-                });
+
+                const doc = new jsPDF();
+
+                doc.text("Hello world!", 10, 10);
+                alert(typeof doc);
+
                 /*if (JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Open) {
                     cpj = new JSPM.ClientPrintJob();
                     cpj.clientPrinter = new JSPM.DefaultPrinter();

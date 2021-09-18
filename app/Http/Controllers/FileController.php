@@ -29,7 +29,7 @@ class FileController extends Controller
     }
 
     public function a5(){
-        return view("a5");
+        return view("receipt");
     }
 
     public function pdf(){
@@ -37,33 +37,26 @@ class FileController extends Controller
         $html = "<div></div>";
         $defaultConfig = (new ConfigVariables())->getDefaults();
         $fontDirs = $defaultConfig['fontDir'];
-
         $defaultFontConfig = (new FontVariables())->getDefaults();
         $fontData = $defaultFontConfig['fontdata'];
         $mpdf = new Mpdf([
             "format" =>[148,210],
-            'fontDir' => array_merge($fontDirs, [
-                public_path("font")
-            ]),
-            'fontdata' => $fontData + [
-                    'KhmerOS' => [
-                        'R' => 'KhmerOS.ttf',
-                        'I' => 'KhmerOS.ttf',
-                    ],
-                    'KhmerBokor'=>[
-                        'R' => 'KhmerOSbokor.ttf',
-                        'I' => 'KhmerOSbokor.ttf',
-                    ],
-                    "Siemreap" => [
-                        'R' => 'KhmerOSsiemreap.ttf',
-                        'I' => 'KhmerOSsiemreap.ttf',
-                    ],
-                    'KhmerMoul' => [
-                        'R' => 'KhmerMoul.ttf',
-                        'I' => 'KhmerMoul.ttf',
-                    ]
+            'fontDir' => public_path("font"),
+            'fontdata' => [
+                "moul" => [
+                    'R' => "Moul.ttf",
+                    'useOTL' => 0xFF,
                 ],
-            'default_font' => 'KhmerOS',
+                "khmerosbokor" => [
+                    'R' => "KhmerOSbokor.ttf",
+                    'useOTL' => 0xFF,
+                ],
+                "khmerossiemreap" => [
+                    'R' => "KhmerOSsiemreap.ttf",
+                    'useOTL' => 0xFF,
+                ]
+            ],
+            'default_font' => 'khmerossiemreap',
             'margin_top' => 0,
             'margin_left' => 0,
             'margin_right' => 0,
@@ -75,7 +68,6 @@ class FileController extends Controller
     }
 
     public function save(Request $request){
-        $data = $request;
-        return \response(["hello"=>"Me"]);
+
     }
 }
