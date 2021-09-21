@@ -210,4 +210,22 @@ const a_a = {
                 break;
         }
     },
+    prn:function (print_file){
+        JSPM.JSPrintManager.auto_reconnect = true;
+        JSPM.JSPrintManager.start();
+        JSPM.JSPrintManager.WS.onStatusChanged = function () {
+            if (JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Open) {
+                var cpj = new JSPM.ClientPrintJob();
+                var myPrinter = new JSPM.InstalledPrinter("Canon TS6100 series");
+                myPrinter.paperName = "A5";
+                myPrinter.trayName = "Automatically Select";
+                myPrinter.pageSizing = "Fit";
+                myPrinter.printAutoCenter = true;
+                cpj.clientPrinter = myPrinter;
+                var my_file = new JSPM.PrintFilePDF(print_file, JSPM.FileSourceType.URL, 'MyFile.pdf', 1);
+                cpj.files.push(my_file);
+                cpj.sendToClient();
+            }
+        };
+    }
 }

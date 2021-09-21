@@ -442,14 +442,6 @@
             $_c.watch("config",function (){
                 nisz.load_cus();
             });
-            JSPM.JSPrintManager.auto_reconnect = true;
-            JSPM.JSPrintManager.start();
-            JSPM.JSPrintManager.WS.onStatusChanged = function () {
-                if (JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Open) {
-                    nisz.printjob = new JSPM.ClientPrintJob();
-                    nisz.printjob.clientPrinter = new JSPM.DefaultPrinter();
-                }
-            };
 
         },
         methods:{
@@ -618,16 +610,14 @@
                         nisis.paid = "";
                         nisis.note = "";
                         nisis.sale_errors = [];
-                        nisis.print(resl.receipt);
+                        a_a.prn(resl.receipt);
                     }
                 }).catch(function (err){
                     alert(err);
                 });
             },
             print:function (document){
-                var my_file = new JSPM.PrintFile(document, JSPM.FileSourceType.URL, 'MyFile.pdf', 1);
-                this.printjob.files.push(my_file);
-                this.printjob.sendToClient();
+
             },
             cus:function (){
                 let fxns = this;

@@ -22,7 +22,6 @@ require "inc/footer.php"
 ?>
 <script type="text/javascript">
     $_accept();
-
 </script>
 </body>
 </html>

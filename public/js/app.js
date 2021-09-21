@@ -2080,8 +2080,7 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.$ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 window._$ = __webpack_require__(/*! cropperjs */ "./node_modules/cropperjs/dist/cropper.js");
-window.Vue = __webpack_require__(/*! vue/dist/vue.min */ "./node_modules/vue/dist/vue.min.js"); //window.htmlToImage = require("html-to-image/dist/html-to-image");
-
+window.Vue = __webpack_require__(/*! vue/dist/vue.min */ "./node_modules/vue/dist/vue.min.js");
 window.JSPM = __webpack_require__(/*! jsprintmanager/JSPrintManager */ "./node_modules/jsprintmanager/JSPrintManager.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /**

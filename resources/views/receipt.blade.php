@@ -154,8 +154,8 @@
                     <div>:</div>
                 </td>
                 <td class="d3 t">
-                    <div>{{ isset($receipt["customer"]["name"]) ? $receipt["customer"]["name"] : "​" }}</div>
-                    <div>{{ isset($receipt["customer"]["tel"]) ? $receipt["customer"]["tel"] : "​" }}</div>
+                    <div>{{ isset($receipt["customer"]["name"]) ? $receipt["customer"]["name"] : "n/a" }}</div>
+                    <div>{{ isset($receipt["customer"]["tel"]) ? $receipt["customer"]["tel"] : "n/a" }}</div>
                     <div>{{ date_format(date_create($receipt["date"]), "d/d/Y") }}</div>
                 </td>
                 <td class="tc d4">
