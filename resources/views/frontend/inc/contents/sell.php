@@ -433,7 +433,8 @@
                         nsz.search_cus();
                     },200);
                 }
-            }
+            },
+            printjob:null
         },
         mounted:function (){
             let nisz = this;
@@ -441,7 +442,14 @@
             $_c.watch("config",function (){
                 nisz.load_cus();
             });
-
+            JSPM.JSPrintManager.auto_reconnect = true;
+            JSPM.JSPrintManager.start();
+            JSPM.JSPrintManager.WS.onStatusChanged = function () {
+                if (JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Open) {
+                    nisz.printjob = new JSPM.ClientPrintJob();
+                    nisz.printjob.clientPrinter = new JSPM.DefaultPrinter();
+                }
+            };
 
         },
         methods:{
@@ -617,17 +625,9 @@
                 });
             },
             print:function (document){
-                JSPM.JSPrintManager.auto_reconnect = true;
-                JSPM.JSPrintManager.start();
-                JSPM.JSPrintManager.WS.onStatusChanged = function () {
-                    if (JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Open) {
-                        var cpj = new JSPM.ClientPrintJob();
-                        cpj.clientPrinter = new JSPM.DefaultPrinter();
-                        var my_file = new JSPM.PrintFile(document, JSPM.FileSourceType.URL, 'MyFile.pdf', 1);
-                        cpj.files.push(my_file);
-                        cpj.sendToClient();
-                    }
-                };
+                var my_file = new JSPM.PrintFile(document, JSPM.FileSourceType.URL, 'MyFile.pdf', 1);
+                this.printjob.files.push(my_file);
+                this.printjob.sendToClient();
             },
             cus:function (){
                 let fxns = this;
