@@ -216,7 +216,7 @@ const a_a = {
         JSPM.JSPrintManager.WS.onStatusChanged = function () {
             if (JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Open) {
                 var cpj = new JSPM.ClientPrintJob();
-                var myPrinter = new JSPM.InstalledPrinter("Canon TS6100 series");
+                var myPrinter = new JSPM.InstalledPrinter("Canon TS6100 series", true);
                 myPrinter.paperName = "A5";
                 myPrinter.trayName = "Automatically Select";
                 myPrinter.pageSizing = "Fit";

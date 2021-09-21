@@ -616,9 +616,6 @@
                     alert(err);
                 });
             },
-            print:function (document){
-
-            },
             cus:function (){
                 let fxns = this;
                 this.put_cst = true;
