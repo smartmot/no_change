@@ -442,6 +442,7 @@
                 nisz.load_cus();
             });
 
+
         },
         methods:{
             find:function (){
@@ -609,10 +610,24 @@
                         nisis.paid = "";
                         nisis.note = "";
                         nisis.sale_errors = [];
+                        nisis.print(resl.receipt);
                     }
                 }).catch(function (err){
                     alert(err);
                 });
+            },
+            print:function (document){
+                JSPM.JSPrintManager.auto_reconnect = true;
+                JSPM.JSPrintManager.start();
+                JSPM.JSPrintManager.WS.onStatusChanged = function () {
+                    if (JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Open) {
+                        var cpj = new JSPM.ClientPrintJob();
+                        cpj.clientPrinter = new JSPM.DefaultPrinter();
+                        var my_file = new JSPM.PrintFile(document, JSPM.FileSourceType.URL, 'MyFile.pdf', 1);
+                        cpj.files.push(my_file);
+                        cpj.sendToClient();
+                    }
+                };
             },
             cus:function (){
                 let fxns = this;

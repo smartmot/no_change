@@ -109,7 +109,6 @@ class StockController extends Controller
                             "type"=>"lost",
                             "note" => $qty > 0 ? "លើស" : "បាត់ (រាប់ខ្វះ)",
                             "date"=>$data["date"],
-                            "user_id" => Auth::id()
                         ]);
                         $stock->save();
                         $resp = [

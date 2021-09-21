@@ -126,7 +126,6 @@ class InvoiceController extends Controller
             "paid" => $data["paid"],
             "pay_date" => $data["pay_date"],
         ]);
-        $payment->save();
         $log = new  AdminActivity([
             "user_id" => Auth::id(),
             "act"=>"បានបញ្ចូលវិក័យប័ត្រ លេខ : ".$invd["no"],
@@ -160,6 +159,7 @@ class InvoiceController extends Controller
             ]);
             $stock->save();
         }
+        $payment->save();
         Calendar::firstOrCreate([
             "date" => date("Y-m-d"),
         ]);

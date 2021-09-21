@@ -4,31 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Calendar;
 use App\Models\Customer;
-use App\Models\Invoice;
-use App\Models\InvoiceItem;
-use App\Models\InvoicePayment;
-use App\Models\Report\DailyExpense;
-use App\Models\Report\DailyIncome;
-use App\Models\Report\DailyNetIncome;
-use App\Models\Report\MonthlyExpense;
-use App\Models\Report\MonthlyIncome;
-use App\Models\Report\YearlyExpense;
 use App\Models\Sale;
-use App\Models\Scan;
-use App\Models\Setting;
 use App\Models\Staff;
 use App\Models\Supplier;
-use App\Models\User;
-use App\Models\Worker;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
 use Milon\Barcode\Facades\DNS1DFacade as DNS1D;
 use Milon\Barcode\Facades\DNS2DFacade as DNS2D;
 
@@ -42,28 +24,10 @@ class FrontendController extends Controller
     }
 
     public function test(Request $request){
-        Calendar::firstOrCreate([
-            "date" => date("Y-m-d"),
-        ]);
-        dd();
-        $staff = Staff::query()
-            ->get()
-            ->toArray();
-        foreach ($staff as $stf){
-            for ($index=1; $index<=30; $index++){
-                DB::table("scans")
-                    ->insert([
-                        [
-                            "staff_id" => $stf["id"],
-                            "time" => date("Y-01-").$index." 5:00:00"
-                        ],
-                        [
-                            "staff_id" => $stf["id"],
-                            "time" => date("Y-01-").$index." 17:00:00"
-                        ]
-                    ]);
-            }
-        }
+        $pdf = new ReceiptController();
+        $dir = "receipts/".date("Y/m/d/");
+        Storage::disk("local")->makeDirectory($dir);
+        $pdf->pdf(2,date("Y/m/d/")."0002.pdf");
     }
 
     public function buy(){

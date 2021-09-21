@@ -20,7 +20,6 @@ class Staff extends Model
         "start_date",
         "address",
         "note",
-        "code",
         "code_image",
         "status",
     ];

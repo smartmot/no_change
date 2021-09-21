@@ -15,7 +15,6 @@ class Stock extends Model
         "type",
         "note",
         "date",
-        "user_id",
     ];
 
     public function item(){

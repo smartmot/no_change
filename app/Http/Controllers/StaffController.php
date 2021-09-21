@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
+use Milon\Barcode\Facades\DNS2DFacade as DNS2D;
 
 class StaffController extends Controller
 {
@@ -88,7 +89,8 @@ class StaffController extends Controller
                 "birthdate" => $data["birthdate"],
                 "start_date" => $data["start_date"],
                 "status" => "active",
-                "photo" => $thumb
+                "photo" => $thumb,
+                "user_id" => Auth::id()
             ]);
             $staff->save();
             $salary = new StaffSalary([
@@ -96,7 +98,17 @@ class StaffController extends Controller
                 "salary" => $data["salary"],
                 "date" => date("Y-m-d H:i:s"), //H:i:s
                 "status" => "primary",
+                "user_id" => Auth::id()
             ]);
+            $qrcode = str_pad($staff->id, 3, '0', STR_PAD_LEFT);
+            $qr = new DNS2D();
+            $qr::setStorPath(storage_path("app\images\qr"));
+            $qr::getBarcodePNGPath($qrcode, 'QRCODE', 40,40);
+            $name = date("Y/m/").$qrcode;
+            Storage::disk("local")
+                ->move("images/qr/".$qrcode."qrcode.png", "images/qr/".$name.".png");
+            $staff->code_image = $name.".png";
+            $staff->save();
             $salary->save();
             $log = new  AdminActivity([
                 "user_id" => Auth::id(),

@@ -11,6 +11,7 @@ use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class SaleController extends Controller
@@ -144,16 +145,22 @@ class SaleController extends Controller
             ];
             $paid = new SalePayment($payment);
             $paid->save();
-
+            $r_name = $year."-".str_pad($no, 4, '0', STR_PAD_LEFT).".pdf";
+            $receipt_name = date("Y/m/d");
+            $dir = "receipts/".$receipt_name;
+            Storage::disk("local")->makeDirectory($dir);
+            $receipt = new ReceiptController();
+            $receipt->pdf($sale_id, $receipt_name."/".$r_name);
             $resp = [
                 "error" => false,
+                "receipt" => asset("receipt/".$receipt_name."/".$r_name),
             ];
-            $calendar = Calendar::firstOrCreate([
+            Calendar::firstOrCreate([
                 "date" => date("Y-m-d"),
             ]);
             $log = new  AdminActivity([
                 "user_id" => Auth::id(),
-                "act"=>"បានលក់ឥវ៉ាន់ជូនអតិថិជន id: ".$data["customer_id"],
+                "act"=>"បានលក់ឥវ៉ាន់ជូនអតិថិជន id: ".($sale["customer_id"]),
                 "reference" => $sale_id
             ]);
             $log->save();

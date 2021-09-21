@@ -25,7 +25,6 @@ class CreateStaffTable extends Migration
             $table->date("start_date")->nullable();
             $table->string("address")->nullable();
             $table->string("note")->nullable();
-            $table->string("code")->nullable();
             $table->string("code_image")->nullable();
             $table->enum("status", ["active", "stop", "f_stop"]);
             $table->timestamps();
