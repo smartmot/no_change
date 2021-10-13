@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Intervention\Image\Facades\Image;
 use Milon\Barcode\Facades\DNS1DFacade as DNS1D;
+use Milon\Barcode\Facades\DNS2DFacade as DNS2D;
 use Mpdf\Config\ConfigVariables;
 use Mpdf\Config\FontVariables;
 use Mpdf\Mpdf;
@@ -65,5 +66,13 @@ class FileController extends Controller
 
     public function save(Request $request){
 
+    }
+
+    public function qrs(){
+        $code= DNS2D::getBarcodeSVG("120", 'QRCODE');
+
+        return view("scanner")->with([
+            "code" => $code
+        ]);
     }
 }

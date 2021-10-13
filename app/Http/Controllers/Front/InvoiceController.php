@@ -28,8 +28,12 @@ class InvoiceController extends Controller
      */
     public function create(Supplier $supplier)
     {
+        $inv = Invoice::query()
+            ->where("supplier_id", "=", $supplier->id)
+            ->count("id");
         return view("frontend.invoices_create")->with([
-            "supplier" => $supplier
+            "supplier" => $supplier,
+            "inv_num" => $supplier->ids . ($inv+1)
         ]);
     }
 

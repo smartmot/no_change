@@ -16,4 +16,4 @@ const $_accept = function (){
         target:"'.route('auth').'"
     });
 };
-'
+';

@@ -121,6 +121,7 @@ require "inc/footer.php"
                             }
                         }
                     }).catch(function (error){
+                        console.log(error.response);
                         alert(error);
                     })
                 }
@@ -132,8 +133,6 @@ require "inc/footer.php"
                     if (img !== ""){
                         gotted = "<?php echo asset("photo"); ?>/" + img + "_thumb.jpg";
                     }
-                }else{
-                    gotted = false;
                 }
                 return gotted;
             },

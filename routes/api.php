@@ -33,6 +33,7 @@ Route::middleware("auth.basic")->group(function (){
     Route::apiResource("salary",Controllers\SalaryPaymentController::class);
     Route::apiResource("staff",Controllers\StaffController::class);
     Route::get("report/staff", [Controllers\StaffController::class, "report"])->name("report.staff");
+    Route::get("report/his", [Controllers\StaffController::class, "history"])->name("report.his");
     Route::get("report/expense", [Controllers\ReportController::class, "expense"])->name("expense.report");
     Route::get("report/income", [Controllers\ReportController::class, "income"])->name("expense.income");
     Route::get("report/net", [Controllers\ReportController::class, "net"])->name("expense.net");
@@ -40,5 +41,6 @@ Route::middleware("auth.basic")->group(function (){
     Route::get("buy/report", [Controllers\SupplierController::class, "report"])->name("supplier.reports");
     Route::get("buy/stock", [Controllers\SupplierController::class, "stock"])->name("supplier.stocks");
     Route::delete("del/scan", [Controllers\Front\StaffController::class, "delete_scan"])->name("del.scan");
+    Route::get("/product/search", [Controllers\InvoiceItemController::class, "search"])->name("product.search");
 });
 Route::post('/save', [Controllers\FileController::class,"save"])->name("save");

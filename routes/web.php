@@ -46,17 +46,16 @@ Route::middleware(["auth"])->group(function (){
     Route::get("/report",[Controllers\FrontendController::class,"report"])->name("report");
     Route::get("/report/expence",[Controllers\FrontendController::class,"report"])->name("report.expence");
     Route::get("/report/net",[Controllers\FrontendController::class,"report"])->name("report.net");
-
     Route::post("/upload",[Controllers\UploadController::class,"upload"])->name("upload.image");
     Route::post("/upload/inv",[Controllers\UploadController::class,"invoice"])->name("upload.invoice");
     Route::post("/upload/itm",[Controllers\UploadController::class,"items"])->name("upload.items");
     Route::post("/upload/itm/crop",[Controllers\UploadController::class,"crop_item"])->name("item.crop");
     Route::post("/upload/itm/check",[Controllers\UploadController::class,"check_item"])->name("item.check");
     Route::get("/photo/inv.jpg",[Controllers\UploadController::class,"show_invoice"])->name("upload.show");
-
     Route::post("/upload/crop",[Controllers\UploadController::class,"crop"])->name("upload.crop");
-
     Route::post("/auth",[Controllers\FrontendController::class, "auth"])->name("auth");
+    Route::resource("/doc",Controllers\StaffDocumentController::class);
+    Route::get("/download/{qr}",[Controllers\DownloadController::class,"download"])->name("download");
 });
 
 Route::get("/test",[Controllers\FrontendController::class,"test"]);
@@ -64,7 +63,8 @@ Route::get("/tx",function (){
     return view("frontend.test");
 });
 Route::get("/barcode/{code}",[Controllers\FileController::class,"barcode"]);
-
+Route::get("/qrs",[Controllers\FileController::class,"qrs"]);
+Route::get("/abc",[Controllers\InvoiceItemController::class,"search"]);
 
 Route::get('/script.js', [Controllers\FrontendController::class,"script"])->name("script");
 Route::get('/photo/6x7.jpg', [Controllers\FileController::class,"svg6x7"])->name("svg6x7");

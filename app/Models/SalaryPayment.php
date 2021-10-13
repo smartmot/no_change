@@ -30,6 +30,6 @@ class SalaryPayment extends Model
     }
 
     public function was_salary(){
-        $this->belongsTo(StaffSalary::class, "salary_id");
+        return $this->belongsTo(StaffSalary::class, "salary_id");
     }
 }

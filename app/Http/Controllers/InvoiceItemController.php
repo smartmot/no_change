@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdminActivity;
+use App\Models\Buy\Item;
 use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class InvoiceItemController extends Controller
@@ -115,5 +117,15 @@ class InvoiceItemController extends Controller
     public function destroy(InvoiceItem $invoiceItem)
     {
         //
+    }
+
+    public function search(Request $request){
+        $inv = DB::table("invoice_items")
+            ->selectRaw("invoice_items.*, invoices.currency")
+            ->join("invoices", "invoices.id", "=", "invoice_items.invoice_id")
+            ->where("currency", "=", $request->get("currency"))
+            ->get()
+            ->toArray();
+        return response($inv);
     }
 }

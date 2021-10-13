@@ -85,6 +85,7 @@ class ScanController extends Controller
                 }
                 $scan = new Scan([
                     "staff_id" => $staff->id,
+                    "user_id" => Auth::id(),
                     "time" => date("Y-m-d H:i:s")
                 ]);
                 $scan->save();

@@ -152,6 +152,8 @@ require "inc/footer.php"
                             nis.pay_progress = false;
                         }
                     }
+                }).catch(function (err){
+                    alert(err);
                 })
             },
             date:function (){

@@ -53,7 +53,7 @@
                             <div class="pt_10 pr_5">
                                 <label for="no" class="fm-smreap">ID<span class="c_1" v-if="error.no"> : {{ error.no[0] }}</span></label>
                                 <div class="ds_f">
-                                    <input type="text" v-model="params.no" name="no" class="input-1 pr_10 pl_10 pt_3 pb_3 fm-smreap wp_100 box-s4 b_r_3" id="no" placeholder="បញ្ចូល ID">
+                                    <input type="text" v-model="params.no" name="no" class="input-1 pr_10 pl_10 pt_3 pb_3 fm-smreap wp_100 box-s4 b_r_3" id="no" placeholder="បញ្ចូល ID" disabled>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                             <div class="pt_10 pl_5">
                                 <label for="currency" class="fm-smreap">រូបបិយប័ណ្ណ<span class="c_1" v-if="error.currency"> : Invalid</span></label>
                                 <div class="ds_f">
-                                    <select name="currency" v-model="params.currency" class="input-1 pr_10 pl_10 pt_3 pb_3 fm-smreap wp_100 box-s4 b_r_3" id="currency">
+                                    <select name="currency" v-model="params.currency" :class="'input-1 pr_10 pl_10 pt_3 pb_3 fm-smreap wp_100 box-s4 b_r_3'+(estock ? ' i-error':'')" id="currency">
                                         <option value="">រូបបិយប័ណ្ណ</option>
                                         <option value="riel">រៀល</option>
                                         <option value="usd">ដុល្លា</option>
@@ -95,18 +95,15 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <td colspan="3"></td>
-                                    <td class="t_a_c">សរុប</td>
+                                    <td colspan="4" class="t_a_r pr_10">សរុប</td>
                                     <td>{{ money(total(), params.currency) }}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3"></td>
-                                    <td class="t_a_c">ទូទាត់</td>
+                                    <td class="t_a_r pr_10" colspan="4">ទូទាត់</td>
                                     <td>{{ money(params.paid, params.currency) }}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3"></td>
-                                    <td class="t_a_c">នៅខ្វះ</td>
+                                    <td colspan="4" class="t_a_r pr_10">នៅខ្វះ</td>
                                     <td>{{ money(total() - params.paid, params.currency) }}</td>
                                 </tr>
                                 </tfoot>
@@ -168,15 +165,24 @@
 
                     <div class="pt_10">
                         <label for="pname" class="fm-smreap">ឈ្មោះឥវ៉ាន់<span class="c_1" v-if="errors.name"> : {{ errors.name[0] }}</span></label>
-                        <div class="ds_f">
-                            <input type="text" name="name" v-model="item.name" class="input-1 pr_10 pl_10 pt_3 pb_3 fm-smreap wp_100 box-s4 b_r_3" id="pname" placeholder="ឈ្មោះឥវ៉ាន់">
+                        <div class="ds_f p-r">
+                            <input type="text" name="name" v-model="item.name" class="input-1 pr_10 pl_10 pt_3 pb_3 fm-smreap wp_100 box-s4 b_r_3" id="pname" placeholder="ឈ្មោះឥវ៉ាន់" :disabled="prod.issearch">
+                            <div class="p-a t_2 r_3 w_25 h_25 lh_25 t_a_c bc_1 c_2 b_r_c csr-p hbc-danger" @click="adds()" v-if="!prod.issearch">
+                                <span class="fa fa-search"></span>
+                            </div>
+                            <div class="p-a t_2 r_3 w_25 h_25 lh_25 t_a_c bc_1 c_2 b_r_c csr-p hbc-danger" @click="prod.issearch=false; reset();prod.opop = false" v-if="prod.issearch">
+                                <span class="fa fa-close"></span>
+                            </div>
+                            <div class="bc_6 c_2 p-a t-40 fs_14 r-3 pr_10 pl_10 b_r_4 fm-smreap pt_3 pb_3 box-s1 lipc1" v-if="estock">
+                                សូមជ្រើសរើសរូបបិយប័ណ្ណជាមុនសិន
+                            </div>
                         </div>
                     </div>
 
                     <div class="pt_10">
-                        <label for="pids" class="fm-smreap">ID<span class="c_1" v-if="errors.ids"> : {{ errors.ids[0] }}</span></label>
-                        <div class="ds_f">
-                            <input type="text" name="ids" :value="params.no + '-0' + items.length" class="input-1 pr_10 pl_10 pt_3 pb_3 fm-smreap wp_100 box-s4 b_r_3" id="pids" placeholder="ID" disabled>
+                        <label for="pids" class="fm-smreap">លេខកូដ<span class="c_1" v-if="errors.ids"> : {{ errors.ids[0] }}</span></label>
+                        <div class="ds_f p-r">
+                            <input type="text" name="ids" v-model="item.ids" class="input-1 pr_10 pl_10 pt_3 pb_3 fm-smreap wp_100 box-s4 b_r_3" id="pids" placeholder="ID" disabled>
                         </div>
                     </div>
 
@@ -196,7 +202,7 @@
                                 <div class="pt_10">
                                     <label for="unit_price" class="fm-smreap">តម្លៃ/ឯកតា<span class="c_1" v-if="errors.unit_price"> : Invalid</span></label>
                                     <div class="ds_f">
-                                        <input type="number" step="any" v-model="item.unit_price" name="unit_price" class="input-1 pr_10 pl_10 pt_3 pb_3 fm-smreap wp_100 box-s4 b_r_3" id="unit_price" placeholder="តម្លៃ/ឯកតា">
+                                        <input type="number" step="any" v-model="item.unit_price" name="unit_price" class="input-1 pr_10 pl_10 pt_3 pb_3 fm-smreap wp_100 box-s4 b_r_3" id="unit_price" placeholder="តម្លៃ/ឯកតា" :disabled="prod.issearch">
                                     </div>
                                 </div>
                             </div>
@@ -285,111 +291,7 @@
     <input type="reset" hidden>
 </form>
 
-
 <script type="text/javascript">
-    let barcode = new Vue({
-        el:"#invoice",
-        watch:{
-
-        },
-        data:{
-            params:{
-                supplier_id:"<?php echo $supplier->id; ?>",
-                no:"",
-                name:"",
-                date:"<?php echo date("Y-m-d"); ?>",
-                time:"<?php echo date("H:i"); ?>",
-                paid:0,
-                pay_date:"<?php echo date("Y-m-d"); ?>",
-                items:"",
-                currency:"",
-            },
-            errors:[],
-            error:[],
-            items:[],
-            item:{
-                name:"",
-                qty:"",
-                unit_price:"",
-                photo:""
-            },
-            exchange:JSON.parse('<?php echo json_encode(config("pos.exchange")); ?>'),
-        },
-        methods:{
-            money:function (money,currency){
-                switch (currency){
-                    case "riel":
-                        return numeral(money).format('0,0') + "៛";
-                        break;
-                    case "usd":
-                        return numeral(parseFloat(money)).format('0,0.00$');
-                        break;
-                    case "bath":
-                        return numeral(money).format('0,0') + "បាត";
-                        break;
-                    default:
-                        return numeral(parseFloat(money)).format('$0,0.00');
-                        break;
-                }
-            },
-            check:function (){
-                let n_itm = this;
-                axios.post("<?php echo route("item.check"); ?>",null,{
-                    headers:$_i.headers,
-                    params:n_itm.item
-                }).then(function (checked){
-                    if (checked.data.error){
-                        n_itm.errors = checked.data.errors;
-                    }else{
-                        n_itm.items.push(checked.data.data);
-                        n_itm.item = {
-                            name:"",
-                            qty:"",
-                            unit_price:"",
-                            photo:""
-                        };
-                        $("#img_itm").attr("src", "<?php echo asset("icon/blank.svg"); ?>");
-                    }
-                })
-            },
-            total:function (){
-                let totalz = 0;
-                this.items.forEach(function (produ, krp){
-                    totalz += produ.qty * produ.unit_price;
-                });
-                return totalz;
-            },
-            create:function (){
-                let c_nis = this;
-                if (this.params.paid > this.total()){
-                    this.error["paid"] = ["បង់លុយលើសចំនួន"];
-                }else {
-                    this.params["items"] = JSON.stringify(this.items);
-                    axios.post("<?php echo route("invoice.store") ;?>",null,{
-                        headers:$_i.headers,
-                        params:this.params
-                    }).then(function (created){
-                        if (created.data.error){
-                            c_nis.error = created.data.errors;
-                        }else{
-                            window.location.href = "<?php echo route("suppliers.show", $supplier->id) ?>";
-                        }
-                    }).catch(function (error){
-                        alert(error);
-                        if (error.response) {
-                            console.log(error.response.data);
-                            console.log(error.response.status);
-                            console.log(error.response.headers);
-                        }
-                    })
-                }
-            }
-        },
-        mounted:function (){
-
-        }
-    });
-
 
     var url = "<?php echo asset("icon/16x9_pulse.svg"); ?>",
         image = document.getElementById("tocropz"),

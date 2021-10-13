@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>លក់ចេញ - <?php echo config("app.name");?></title>
+    <title>បុគ្គលិគ - <?php echo config("app.name");?></title>
     <?php
     require "inc/asset.php"
     ?>
@@ -138,29 +138,30 @@ require "inc/footer.php"
                             date:nis.pay_date,
                             salary:nis.paid
                         }
-                    })
-                        .then(function (paid){
-                            if (paid.data.error){
-                                nis.errors = paid.data.errors;
-                            }else{
-                                nis.payto.is_paid = paid.data.paid;
-                                staff.staffs[nis.index] = nis.payto;
-                                if (nis.continuous){
-                                    nis.index+=1
-                                    if (staff.staffs[nis.index]){
-                                        nis.payto = staff.staffs[nis.index];
-                                        nis.paid = ((nis.payto.pre_salary/30)*nis.payto.work).toFixed(2);
-                                        if (nis.payto.is_paid){
-                                            nis.pay_progress = false;
-                                        }
-                                    }else{
+                    }).then(function (paid){
+                        if (paid.data.error){
+                            nis.errors = paid.data.errors;
+                        }else{
+                            nis.payto.is_paid = paid.data.paid;
+                            staff.staffs[nis.index] = nis.payto;
+                            if (nis.continuous){
+                                nis.index+=1
+                                if (staff.staffs[nis.index]){
+                                    nis.payto = staff.staffs[nis.index];
+                                    nis.paid = ((nis.payto.pre_salary/30)*nis.payto.work).toFixed(2);
+                                    if (nis.payto.is_paid){
                                         nis.pay_progress = false;
                                     }
                                 }else{
                                     nis.pay_progress = false;
                                 }
+                            }else{
+                                nis.pay_progress = false;
                             }
-                        })
+                        }
+                    }).catch(function (err){
+                        alert(err);
+                    });
                 }
             },
             date:function (){

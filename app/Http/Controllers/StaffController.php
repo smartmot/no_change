@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdminActivity;
+use App\Models\SalaryPayment;
 use App\Models\Staff;
 use App\Models\StaffSalary;
 use App\Models\Worker;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
@@ -245,8 +247,12 @@ class StaffController extends Controller
         }
     }
 
-    public function history(Staff $staff){
-
+    public function history(Request $request){
+        $his = SalaryPayment::query()
+            ->with("was_salary")
+            ->get()
+            ->toArray();
+        return response($his);
     }
 
     public function docs(Staff $staff){

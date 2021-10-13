@@ -56,7 +56,9 @@
         <a href="<?php echo route("staff.show", $staff["id"]); ?>" class="ds_b fm-smreap t_d_n c_8 <?php echo request()->route()->getName() == "staff.show" ? "active" : ""; ?>">វត្តមាន</a>
         <a href="<?php echo route("staff.history", $staff["id"]); ?>" class="ds_b fm-smreap t_d_n c_8 <?php echo request()->route()->getName() == "staff.history" ? "active" : ""; ?>">ប្រវត្តិការងារ</a>
         <a href="<?php echo route("staff.docs", $staff["id"]); ?>" class="ds_b fm-smreap t_d_n c_8 <?php echo request()->route()->getName() == "staff.docs" ? "active" : ""; ?>">ឯកសារ</a>
+        <a href="<?php echo route("download", (str_replace("/", "_", "images/qr/".$staff->code_image))); ?>" class="ds_b fm-smreap t_d_n c_8">
+            <span>QR Code សំគាល់បុគ្គលិក</span>
+        </a>
     </div>
 </div>
-
 

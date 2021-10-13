@@ -1,4 +1,5 @@
 <div class="wp_100">
+    <div v-if="suppliers.length === 0" class="fm-smreap opc_70">គ្មាន</div>
     <div class="rowc" id="suppliers">
         <div class="xl-2 lg-3 md-4 sm-4 fx_6" v-for="supplier in suppliers">
             <div class="pr_10 pl_10 pb_20">

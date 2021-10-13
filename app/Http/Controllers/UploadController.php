@@ -180,7 +180,8 @@ class UploadController extends Controller
             "name" => ["required"],
             "qty" => ["required"],
             "unit_price" => ["required"],
-            "photo" => ["required"]
+            "photo" => ["required"],
+            "ids" => ["required"]
         ]);
         $resp = [
             "error" => false

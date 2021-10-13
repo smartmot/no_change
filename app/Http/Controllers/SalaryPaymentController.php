@@ -55,7 +55,7 @@ class SalaryPaymentController extends Controller
         }else{
             $data = $validator->validate();
             $staff = Worker::query()->find($data["staff_id"]);
-            if ($staff->is_paid === false){
+            if ($staff->is_paid !== false){
                 exit(json_encode([
                     "error" => true,
                     "errors" => [],

@@ -16,6 +16,7 @@ class CreateStaffDocumentsTable extends Migration
         Schema::create('staff_documents', function (Blueprint $table) {
             $table->id();
             $table->foreignId("staff_id");
+            $table->foreignId("user_id");
             $table->string("url");
             $table->timestamps();
         });
